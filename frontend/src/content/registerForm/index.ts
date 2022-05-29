@@ -1,9 +1,13 @@
-const LOGIN_FORM = {
-  LOGIN: "Sign in to your account",
-  LOGINBUTTON: "Sign in",
-  LOGOUT: "Logout",
-  NANNY_TAB: "Find a job",
-  CUSTOMER_TAB: "Customer Tab",
+const REGISTER_FORM = {
+  REGISTER: "Sign up to your account",
+  REGISTERBUTTON: "Sign up",
+
+  USERNAME: {
+    LABEL: "User name",
+    PLACE_HOLDER: "Joe Biden",
+    INFO_MESSAGE: "Please make sure you type the correct user name",
+    ERROR_MESSAGE: "user format error",
+  },
   PHONE: {
     LABEL: "Phone",
     PLACE_HOLDER: "(XXX) XXX-XXXX",
@@ -18,9 +22,15 @@ const LOGIN_FORM = {
   },
   PASSWORD: {
     LABEL: "Password",
-    PLACE_HOLDER: "password",
-    INFO_MESSAGE: "Please make sure you type the correct password",
-    ERROR_MESSAGE: "password input error",
+    PLACE_HOLDER: "Password",
+    INFO_MESSAGE: "Please make sure you type the correct email",
+    ERROR_MESSAGE: "Your code is incorrect",
+  },
+  PASSWORD2: {
+    LABEL: "Re-enter Password",
+    PLACE_HOLDER: "Password",
+    INFO_MESSAGE: "Please make sure you type the correct email",
+    ERROR_MESSAGE: "Your code is incorrect",
   },
   CODE: {
     LABEL: "Verfication",
@@ -35,4 +45,4 @@ const LOGIN_FORM = {
   DISCLAIMER: "Please read the <a>disclaimer</a> before log in",
 };
 
-export default LOGIN_FORM;
+export default REGISTER_FORM;

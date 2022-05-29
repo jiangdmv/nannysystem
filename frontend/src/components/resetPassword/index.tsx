@@ -2,20 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "antd";
 
-import LOGIN_FORM from "../../content/form";
 import Modal from "../../common/modal";
 import ModalContent from "./modalContent";
+import RESET_PASSWORD_FORM from "../../content/resetPasswordForm";
 
-const Login = ({ handleLogin = () => {} }) => {
+const ResetPassword = ({ handleLogin = () => {} }) => {
   const [visible, setVisible] = useState(false);
 
   return (
     <>
-      <Button type="primary" onClick={() => setVisible(true)}>
-        {LOGIN_FORM.LOGINBUTTON}
+      <Button type="link" onClick={() => setVisible(true)}>
+        {RESET_PASSWORD_FORM.RESETPASSWORDBUTTON}
       </Button>
       <Modal
-        titleText={LOGIN_FORM.LOGIN}
+        titleText={RESET_PASSWORD_FORM.RESETPASSWORD}
         visible={visible}
         setVisible={setVisible}
       >
@@ -25,4 +25,4 @@ const Login = ({ handleLogin = () => {} }) => {
   );
 };
 
-export default Login;
+export default ResetPassword;

@@ -1,0 +1,134 @@
+import React, { useState } from "react";
+import { Checkbox, Button } from "antd";
+import validator from "validator";
+
+import { StatusCodes } from "http-status-codes";
+import TextInput from "../../../common/input/textInput";
+import REGISTER_FORM from "../../../content/registerForm";
+
+import CONSTANTS from "../../../constants";
+import api from "../../../api/loginApi";
+
+interface IProps {
+  handleOnLogin: () => void;
+}
+
+const Form = ({ handleOnLogin = () => {} }: IProps) => {
+  const [userName, setuserName] = useState({
+    value: "",
+    errorMessage: "",
+  });
+
+  const [email, setEmail] = useState({
+    value: "",
+    errorMessage: "",
+  });
+
+  const [password, setPassword] = useState({
+    value: "",
+    errorMessage: "",
+  });
+
+  const [check, setCheck] = useState(false);
+
+  // Return emtpy stirng if there is no error
+  const validateUserNameFEAndSetErrorMessage = () => {
+    let errorMessage = "";
+    if (true) {
+      errorMessage = REGISTER_FORM.USERNAME.ERROR_MESSAGE;
+    }
+    setEmail({
+      ...userName,
+      errorMessage,
+    });
+    return errorMessage;
+  };
+
+  // Return emtpy stirng if there is no error
+  const validateEmailFEAndSetErrorMessage = () => {
+    let errorMessage = "";
+    if (!validator.isEmail(email.value)) {
+      errorMessage = REGISTER_FORM.EMAIL.ERROR_MESSAGE;
+    }
+    setEmail({
+      ...email,
+      errorMessage,
+    });
+    return errorMessage;
+  };
+
+  // Return emtpy stirng if there is no error
+  const validatePasswordFEAndSetErrorMessage = () => {
+    let errorMessage = "";
+    if (!validator.isStrongPassword(password.value)) {
+      errorMessage = REGISTER_FORM.PASSWORD.ERROR_MESSAGE;
+    }
+    setEmail({
+      ...password,
+      errorMessage,
+    });
+    return errorMessage;
+  };
+
+  const handleSubmit = async () => {
+    const emailError = validateEmailFEAndSetErrorMessage();
+    const codeError = validatePasswordFEAndSetErrorMessage();
+    if (!(emailError || codeError)) {
+      const response = await api.loginApi({
+        customerType: CONSTANTS.USER_TYPE.CUSTOMER,
+        email: email.value,
+        password: password.value,
+        rememberMe: check,
+      });
+      if (response.status !== StatusCodes.OK) {
+        throw new Error(
+          `Login API response status error: ${JSON.stringify(response)}`
+        );
+      } else {
+        handleOnLogin();
+      }
+    }
+  };
+
+  return (
+    <>
+      <TextInput
+        value={email.value}
+        label={REGISTER_FORM.USERNAME.LABEL}
+        placeholder={REGISTER_FORM.USERNAME.PLACE_HOLDER}
+        infoMessage={REGISTER_FORM.USERNAME.INFO_MESSAGE}
+        errorMessage={email.errorMessage}
+        onChange={(e) => setuserName({ ...userName, value: e.target.value })}
+      />
+      <TextInput
+        value={email.value}
+        label={REGISTER_FORM.EMAIL.LABEL}
+        placeholder={REGISTER_FORM.EMAIL.PLACE_HOLDER}
+        infoMessage={REGISTER_FORM.EMAIL.INFO_MESSAGE}
+        errorMessage={email.errorMessage}
+        onChange={(e) => setEmail({ ...email, value: e.target.value })}
+      />
+      <TextInput
+        value={password.value}
+        label={REGISTER_FORM.PASSWORD.LABEL}
+        placeholder={REGISTER_FORM.PASSWORD.PLACE_HOLDER}
+        infoMessage={REGISTER_FORM.PASSWORD.INFO_MESSAGE}
+        errorMessage={password.errorMessage}
+        onChange={(e) => setPassword({ ...password, value: e.target.value })}
+      />
+      <TextInput
+        value={password.value}
+        label={REGISTER_FORM.PASSWORD2.LABEL}
+        placeholder={REGISTER_FORM.PASSWORD2.PLACE_HOLDER}
+        infoMessage={REGISTER_FORM.PASSWORD2.INFO_MESSAGE}
+        errorMessage={password.errorMessage}
+        onChange={(e) => setPassword({ ...password, value: e.target.value })}
+      />
+      <Button className="customer-form-submit-button" onClick={handleSubmit}>
+        {REGISTER_FORM.SUBMIT_BUTTON}
+      </Button>
+    </>
+  );
+};
+
+export default Form;

@@ -1,5 +1,26 @@
 .footer {
-  height: 234px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 74px;
   width: 100%;
   background: rgba(236, 236, 236, 0.5);
+}
+
+.socialIcons {
+  list-style: none;
+}
+
+.socialIcons li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.supportPages {
+  list-style: none;
+}
+
+.supportPages li {
+  display: inline-block;
+  padding: 0px 20px;
 }

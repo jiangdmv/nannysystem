@@ -2,20 +2,20 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "antd";
 
-import LOGIN_FORM from "../../content/form";
 import Modal from "../../common/modal";
 import ModalContent from "./modalContent";
+import REGISTER_FORM from "../../content/registerForm";
 
-const Login = ({ handleLogin = () => {} }) => {
+const Register = ({ handleLogin = () => {} }) => {
   const [visible, setVisible] = useState(false);
 
   return (
     <>
-      <Button type="primary" onClick={() => setVisible(true)}>
-        {LOGIN_FORM.LOGINBUTTON}
+      <Button type="link" onClick={() => setVisible(true)}>
+        {REGISTER_FORM.REGISTERBUTTON}
       </Button>
       <Modal
-        titleText={LOGIN_FORM.LOGIN}
+        titleText={REGISTER_FORM.REGISTER}
         visible={visible}
         setVisible={setVisible}
       >
@@ -25,4 +25,4 @@ const Login = ({ handleLogin = () => {} }) => {
   );
 };
 
-export default Login;
+export default Register;
