@@ -8,6 +8,8 @@ import REGISTER_FORM from "../../content/registerForm";
 
 const Register = ({ handleLogin = () => {} }) => {
   const [visible, setVisible] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
 
   return (
     <>

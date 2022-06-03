@@ -8,6 +8,7 @@ interface IProps {
   titleText?: string;
   visible?: boolean;
   children?: JSX.Element;
+  test?: () => {};
   setVisible: (isVisible: boolean) => void;
 }
 

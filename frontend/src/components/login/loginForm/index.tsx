@@ -17,7 +17,11 @@ import ResetPassword from "../../resetPassword";
 // ---------------------------------------------------------- //
 //npm i --save-dev @types/react-html-parser
 //npm i --save-dev @types/validator
-const Form = ({ handleOnLogin = () => {} }) => {
+const Form = ({
+  handleOnLogin = () => {},
+  handleOnClickRegister = () => {},
+  handleOnClickResetPassword = () => {},
+}) => {
   const [email, setEmail] = useState({
     value: "",
     errorMessage: "",
@@ -108,9 +112,12 @@ const Form = ({ handleOnLogin = () => {} }) => {
         dangerouslySetInnerHTML={{ __html: LOGIN_FORM.DISCLAIMER }}
       />
       <div className={"customer-form-disclaimer"}>
-        Don't have an account? <Register />
+        Don't have an account?
+        <a onClick={handleOnClickRegister}>Register</a>
+        <Register />
       </div>
       <div className={"customer-form-disclaimer"}>
+        <a onClick={handleOnClickResetPassword}>ResetPassword</a>
         <ResetPassword />
       </div>
     </>
