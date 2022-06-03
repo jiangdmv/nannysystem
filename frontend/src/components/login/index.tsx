@@ -8,6 +8,8 @@ import ModalContent from "./modalContent";
 import REGISTER_FORM from "../../content/registerForm";
 import RESET_PASSWORD_FORM from "../../content/resetPasswordForm";
 import LoginModalContent from "./modalContent";
+import RegisterModalContent from "../register/modalContent";
+import ResetPasswordModalContent from "../resetPassword/modalContent";
 
 const Login = ({ handleLogin = () => {} }) => {
   const [visible, setVisible] = useState(false);
@@ -54,14 +56,6 @@ const Login = ({ handleLogin = () => {} }) => {
       </Modal>
     </>
   );
-};
-
-const RegisterModalContent = () => {
-  return <>This is Register</>;
-};
-
-const ResetPasswordModalContent = () => {
-  return <>This is reset password</>;
 };
 
 export default Login;

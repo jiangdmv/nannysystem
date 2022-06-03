@@ -4,7 +4,7 @@ import Form from "../registerForm";
 
 import LOGIN_FORM from "../../../content/form";
 
-const ModalContent = ({ handleOnLogin = () => {} }) => {
+const RegisterModalContent = ({ handleOnLogin = () => {} }) => {
   return (
     <>
       <div className={"modal-content-tabs"}>{LOGIN_FORM.CUSTOMER_TAB}</div>
@@ -15,4 +15,4 @@ const ModalContent = ({ handleOnLogin = () => {} }) => {
   );
 };
 
-export default ModalContent;
+export default RegisterModalContent;
