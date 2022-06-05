@@ -1,13 +1,25 @@
 .footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  height: 74px;
+  height: 50px;
   width: 100%;
-  background: rgba(236, 236, 236, 0.5);
+  background: #111827;
+  position: relative;
+}
+
+.copyRight {
+  display: inline-block;
+  color: white;
 }
 
 .socialIcons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
   list-style: none;
 }
 
@@ -17,10 +29,19 @@
 }
 
 .supportPages {
+  display: inline-block;
+  color: white;
   list-style: none;
 }
 
 .supportPages li {
+  color: white;
   display: inline-block;
   padding: 0px 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  socialIcons {
+    float: left;
+  }
 }

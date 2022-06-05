@@ -1,5 +1,10 @@
 import React from "react";
 import "./index.css";
+import {
+  YoutubeOutlined,
+  TwitterOutlined,
+  FacebookOutlined,
+} from "@ant-design/icons";
 
 const Footer = () => {
   return (
@@ -7,8 +12,15 @@ const Footer = () => {
       <div className="footer">
         <div className="copyRight">@2022 All Rights Reserved.</div>
         <ul className="socialIcons">
-          <li>F</li>
-          <li>T</li>
+          <li>
+            <YoutubeOutlined />
+          </li>
+          <li>
+            <TwitterOutlined />
+          </li>
+          <li>
+            <FacebookOutlined />
+          </li>
         </ul>
         <ul className="supportPages">
           <li>Contact us</li>
