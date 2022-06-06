@@ -50,7 +50,7 @@ const Form = ({
   // Return emtpy stirng if there is no error
   const validatePasswordFEAndSetErrorMessage = () => {
     let errorMessage = "";
-    if (!validator.isStrongPassword(email.value)) {
+    if (!validator.isStrongPassword(password.value)) {
       errorMessage = LOGIN_FORM.PASSWORD.ERROR_MESSAGE;
     }
     setEmail({
