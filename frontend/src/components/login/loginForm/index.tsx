@@ -130,11 +130,9 @@ const Form = ({
       <div className={"customer-form-disclaimer"}>
         Don't have an account?
         <a onClick={handleOnClickRegister}>Register</a>
-        <Register />
       </div>
       <div className={"customer-form-disclaimer"}>
         <a onClick={handleOnClickResetPassword}>ResetPassword</a>
-        <ResetPassword />
       </div>
     </>
   );

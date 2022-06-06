@@ -39,7 +39,7 @@ const Login = ({ handleLogin = () => {} }) => {
         }
       >
         {showRegister ? (
-          <RegisterModalContent />
+          <RegisterModalContent handleOnRegister={() => setVisible(false)} />
         ) : showResetPassword ? (
           <ResetPasswordModalContent />
         ) : (

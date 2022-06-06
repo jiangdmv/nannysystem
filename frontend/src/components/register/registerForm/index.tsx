@@ -12,10 +12,10 @@ import axiosInstance from "../../../api/axios";
 import history from "history/browser";
 
 interface IProps {
-  handleOnLogin: () => void;
+  handleOnRegister: () => void;
 }
 
-const Form = ({ handleOnLogin = () => {} }: IProps) => {
+const Form = ({ handleOnRegister }: IProps) => {
   const [userName, setuserName] = useState({
     value: "",
     errorMessage: "",
@@ -87,18 +87,20 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
         password: password.value,
       });
       // .then((res) => {
-      //   history.push("/home");
+      //   history.push("/registered");
       //   console.log(res);
-      // })
+      // });
       if (response.status == StatusCodes.CREATED) {
         // Page: please check your email
+        history.push("/registered");
+        handleOnRegister();
       }
       if (response.status !== StatusCodes.OK) {
         throw new Error(
           `Login API response status error: ${JSON.stringify(response)}`
         );
       } else {
-        handleOnLogin();
+        handleOnRegister();
       }
     }
   };

@@ -4,12 +4,12 @@ import Form from "../registerForm";
 
 import LOGIN_FORM from "../../../content/form";
 
-const RegisterModalContent = ({ handleOnLogin = () => {} }) => {
+const RegisterModalContent = ({ handleOnRegister }) => {
   return (
     <>
       <div className={"modal-content-tabs"}>{LOGIN_FORM.CUSTOMER_TAB}</div>
       <div className={"modal-content-form"}>
-        <Form handleOnLogin={handleOnLogin} />
+        <Form handleOnRegister={handleOnRegister} />
       </div>
     </>
   );
