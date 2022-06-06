@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./index.css";
 import Login from "../../components/login";
 import Logout from "../../components/logout";
+import SearchBar from "../searchBar";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 
 const Header = () => {
@@ -16,7 +17,16 @@ const Header = () => {
           Management<span className="sideLogo"> Chuwa</span>
         </div>
 
-        <div className="searchBar">Search Bar</div>
+        <div className="searchBar">
+          <SearchBar
+            value={""}
+            label={""}
+            placeholder={"Search"}
+            infoMessage={""}
+            errorMessage={""}
+            onChange={() => {}}
+          />
+        </div>
 
         <div className="signIn">
           <UserOutlined />

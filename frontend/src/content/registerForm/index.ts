@@ -4,7 +4,7 @@ const REGISTER_FORM = {
 
   USERNAME: {
     LABEL: "User name",
-    PLACE_HOLDER: "Joe Biden",
+    PLACE_HOLDER: "User name",
     INFO_MESSAGE: "Please make sure you type the correct user name",
     ERROR_MESSAGE: "user format error",
   },

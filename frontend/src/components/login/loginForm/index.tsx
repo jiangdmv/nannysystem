@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Checkbox, Button } from "antd";
 import validator from "validator";
 import { StatusCodes } from "http-status-codes";
@@ -77,11 +77,12 @@ const Form = ({
           localStorage.setItem("refresh_token", res.data.refresh);
           axiosInstance.defaults.headers["Authorization"] =
             "JWT " + localStorage.getItem("access_token");
-          // <Header isLoggedin={}/>
+
           // history.push("home/");
           //console.log(res);
           //console.log(res.data);
         });
+
       // if (response.status == StatusCodes.CREATED) {
       //   // Page: please check your email
       // }
@@ -94,7 +95,7 @@ const Form = ({
       // }
     }
   };
-
+  useEffect(() => {}, []);
   return (
     <>
       <TextInput
