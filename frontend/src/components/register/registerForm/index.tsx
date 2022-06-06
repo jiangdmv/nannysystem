@@ -92,7 +92,7 @@ const Form = ({ handleOnRegister }: IProps) => {
       // });
       if (response.status == StatusCodes.CREATED) {
         // Page: please check your email
-        history.push("/registered");
+        history.push("/registered"); // not work
         handleOnRegister();
       }
       if (response.status !== StatusCodes.OK) {

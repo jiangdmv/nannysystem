@@ -21,9 +21,10 @@ import history from "history/browser";
 //npm i --save-dev @types/react-html-parser
 //npm i --save-dev @types/validator
 const Form = ({
-  handleOnLogin = () => {},
+  handleOnLogin,
   handleOnClickRegister = () => {},
   handleOnClickResetPassword = () => {},
+  handleOnLoginOK,
 }) => {
   const [email, setEmail] = useState({
     value: "",
@@ -77,7 +78,8 @@ const Form = ({
           localStorage.setItem("refresh_token", res.data.refresh);
           axiosInstance.defaults.headers["Authorization"] =
             "JWT " + localStorage.getItem("access_token");
-
+          handleOnLogin();
+          handleOnLoginOK();
           // history.push("home/");
           //console.log(res);
           //console.log(res.data);
@@ -85,6 +87,7 @@ const Form = ({
 
       // if (response.status == StatusCodes.CREATED) {
       //   // Page: please check your email
+      //   handleOnLoginOK();
       // }
       // if (response.status !== StatusCodes.OK) {
       //   throw new Error(

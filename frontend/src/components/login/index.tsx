@@ -51,6 +51,7 @@ const Login = ({ handleLogin = () => {} }) => {
             handleOnClickResetPassword={() => {
               setShowResetPassword(true);
             }}
+            handleOnLoginOK={() => setVisible(false)}
           />
         )}
       </Modal>

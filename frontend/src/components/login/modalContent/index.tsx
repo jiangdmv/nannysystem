@@ -5,9 +5,10 @@ import Form from "../loginForm";
 import LOGIN_FORM from "../../../content/form";
 
 const LoginModalContent = ({
-  handleOnLogin = () => {},
+  handleOnLogin,
   handleOnClickRegister = () => {},
   handleOnClickResetPassword = () => {},
+  handleOnLoginOK,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const LoginModalContent = ({
           handleOnLogin={handleOnLogin}
           handleOnClickRegister={handleOnClickRegister}
           handleOnClickResetPassword={handleOnClickResetPassword}
+          handleOnLoginOK={handleOnLoginOK}
         />
       </div>
     </>
