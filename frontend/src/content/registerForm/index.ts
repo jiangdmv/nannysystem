@@ -24,13 +24,13 @@ const REGISTER_FORM = {
     LABEL: "Password",
     PLACE_HOLDER: "Password",
     INFO_MESSAGE: "Please make sure you type the correct email",
-    ERROR_MESSAGE: "Your code is incorrect",
+    ERROR_MESSAGE: "Your password is incorrect",
   },
   PASSWORD2: {
     LABEL: "Re-enter Password",
     PLACE_HOLDER: "Password",
     INFO_MESSAGE: "Please make sure you type the correct email",
-    ERROR_MESSAGE: "Your code is incorrect",
+    ERROR_MESSAGE: "Your password is incorrect",
   },
   CODE: {
     LABEL: "Verfication",

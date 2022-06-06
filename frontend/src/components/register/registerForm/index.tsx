@@ -8,6 +8,7 @@ import REGISTER_FORM from "../../../content/registerForm";
 
 import CONSTANTS from "../../../constants";
 import api from "../../../api/loginApi";
+import axiosInstance from "../../../api/axios";
 
 interface IProps {
   handleOnLogin: () => void;
@@ -25,6 +26,11 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
   });
 
   const [password, setPassword] = useState({
+    value: "",
+    errorMessage: "",
+  });
+
+  const [password2, setPassword2] = useState({
     value: "",
     errorMessage: "",
   });
@@ -72,13 +78,12 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
 
   const handleSubmit = async () => {
     const emailError = validateEmailFEAndSetErrorMessage();
-    const codeError = validatePasswordFEAndSetErrorMessage();
-    if (!(emailError || codeError)) {
-      const response = await api.loginApi({
-        customerType: CONSTANTS.USER_TYPE.CUSTOMER,
+    const passwordError = validatePasswordFEAndSetErrorMessage();
+    if (!(emailError || passwordError)) {
+      const response = await axiosInstance.post("user/register/", {
         email: email.value,
+        user_name: userName.value,
         password: password.value,
-        rememberMe: check,
       });
       if (response.status !== StatusCodes.OK) {
         throw new Error(
@@ -93,11 +98,11 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
   return (
     <>
       <TextInput
-        value={email.value}
+        value={userName.value}
         label={REGISTER_FORM.USERNAME.LABEL}
         placeholder={REGISTER_FORM.USERNAME.PLACE_HOLDER}
         infoMessage={REGISTER_FORM.USERNAME.INFO_MESSAGE}
-        errorMessage={email.errorMessage}
+        errorMessage={userName.errorMessage}
         onChange={(e) => setuserName({ ...userName, value: e.target.value })}
       />
       <TextInput
@@ -117,12 +122,12 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
         onChange={(e) => setPassword({ ...password, value: e.target.value })}
       />
       <TextInput
-        value={password.value}
+        value={password2.value}
         label={REGISTER_FORM.PASSWORD2.LABEL}
         placeholder={REGISTER_FORM.PASSWORD2.PLACE_HOLDER}
         infoMessage={REGISTER_FORM.PASSWORD2.INFO_MESSAGE}
-        errorMessage={password.errorMessage}
-        onChange={(e) => setPassword({ ...password, value: e.target.value })}
+        errorMessage={password2.errorMessage}
+        onChange={(e) => setPassword2({ ...password2, value: e.target.value })}
       />
       <Button className="customer-form-submit-button" onClick={handleSubmit}>
         {REGISTER_FORM.SUBMIT_BUTTON}

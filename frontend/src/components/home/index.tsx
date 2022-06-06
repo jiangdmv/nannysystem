@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import productApi from "../../api/productApi";
 import Loader from "../../common/Loader";
 import ErrorPage from "../../common/ErrorPage";
-import { Row, Col } from "antd";
+import { Table, Row, Col } from "antd";
 
 function Home() {
   const [results, setResults] = useState(null);
