@@ -6,6 +6,8 @@ import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 
 const Header = () => {
   const [isLoggdIn, setIsLoggedin] = useState(false);
+  const [hassError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>

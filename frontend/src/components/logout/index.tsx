@@ -3,9 +3,9 @@ import { Button } from "antd";
 import { StatusCodes } from "http-status-codes";
 
 import api from "../../api/loginApi";
-
+import axiosInstance from "../../api/axios";
 import LOGIN_FORM from "../../content/form";
-
+import history from "history/browser";
 import "antd/dist/antd.css";
 
 const LogoutButton = ({ handleLogout = () => {} }) => {

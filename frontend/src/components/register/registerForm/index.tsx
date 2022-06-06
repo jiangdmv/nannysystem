@@ -9,6 +9,7 @@ import REGISTER_FORM from "../../../content/registerForm";
 import CONSTANTS from "../../../constants";
 import api from "../../../api/loginApi";
 import axiosInstance from "../../../api/axios";
+import history from "history/browser";
 
 interface IProps {
   handleOnLogin: () => void;
@@ -85,6 +86,13 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
         user_name: userName.value,
         password: password.value,
       });
+      // .then((res) => {
+      //   history.push("/home");
+      //   console.log(res);
+      // })
+      if (response.status == StatusCodes.CREATED) {
+        // Page: please check your email
+      }
       if (response.status !== StatusCodes.OK) {
         throw new Error(
           `Login API response status error: ${JSON.stringify(response)}`
