@@ -92,14 +92,14 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
 
   return (
     <>
-      <TextInput
+      {/* <TextInput
         value={email.value}
         label={RESET_PASSWORD_FORM.USERNAME.LABEL}
         placeholder={RESET_PASSWORD_FORM.USERNAME.PLACE_HOLDER}
         infoMessage={RESET_PASSWORD_FORM.USERNAME.INFO_MESSAGE}
         errorMessage={email.errorMessage}
         onChange={(e) => setuserName({ ...userName, value: e.target.value })}
-      />
+      /> */}
       <TextInput
         value={email.value}
         label={RESET_PASSWORD_FORM.EMAIL.LABEL}
@@ -108,7 +108,7 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
         errorMessage={email.errorMessage}
         onChange={(e) => setEmail({ ...email, value: e.target.value })}
       />
-      <TextInput
+      {/* <TextInput
         value={password.value}
         label={RESET_PASSWORD_FORM.PASSWORD.LABEL}
         placeholder={RESET_PASSWORD_FORM.PASSWORD.PLACE_HOLDER}
@@ -123,7 +123,7 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
         infoMessage={RESET_PASSWORD_FORM.PASSWORD2.INFO_MESSAGE}
         errorMessage={password.errorMessage}
         onChange={(e) => setPassword({ ...password, value: e.target.value })}
-      />
+      /> */}
       <Button className="customer-form-submit-button" onClick={handleSubmit}>
         {RESET_PASSWORD_FORM.SUBMIT_BUTTON}
       </Button>

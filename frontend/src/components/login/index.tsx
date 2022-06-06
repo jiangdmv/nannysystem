@@ -11,7 +11,7 @@ import LoginModalContent from "./modalContent";
 import RegisterModalContent from "../register/modalContent";
 import ResetPasswordModalContent from "../resetPassword/modalContent";
 
-const Login = ({ handleLogin = () => {} }) => {
+const Login = ({ handleLogin, handleLoading, handleHasError }) => {
   const [visible, setVisible] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);

@@ -33,7 +33,11 @@ const Header = () => {
           {isLoggdIn ? (
             <Logout handleLogout={() => setIsLoggedin(false)} />
           ) : (
-            <Login handleLogin={() => setIsLoggedin(true)} />
+            <Login
+              handleLogin={() => setIsLoggedin(true)}
+              handleLoading={() => setIsLoading(false)}
+              handleHasError={() => setHasError(true)}
+            />
           )}
         </div>
         <div className="cart">
