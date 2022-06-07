@@ -54,11 +54,13 @@ function ProductModalContent() {
                 key={item.id}
                 size="small"
                 title="Small size card"
+                hoverable
+                // extra={<Button>Hi</Button>}
                 style={{
                   width: 230,
                 }}
               >
-                <Image width={200} src={item.image} />
+                <Image width={200} height={250} src={item.image} />
                 <p>{item.name}</p>
                 <h3>${item.price}</h3>
                 <p>
