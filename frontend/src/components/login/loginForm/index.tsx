@@ -78,7 +78,7 @@ const Form = ({
           localStorage.setItem("refresh_token", res.data.refresh);
           axiosInstance.defaults.headers["Authorization"] =
             "JWT " + localStorage.getItem("access_token");
-          handleOnLogin();
+          // handleOnLogin();
           handleOnLoginOK();
           // history.push("home/");
           //console.log(res);
