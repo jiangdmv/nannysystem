@@ -1,6 +1,6 @@
 import React from "react";
 import Modal from "antd/lib/modal/Modal";
-import { Card, Button, Image, Row, Col } from "antd";
+import { List, Card, Button, Image, Row, Col, Pagination } from "antd";
 import { useState, useEffect } from "react";
 
 function ProductModalContent() {
@@ -28,32 +28,47 @@ function ProductModalContent() {
   const ShowProducts = ({ results }) => {
     const lists = results;
     console.log(lists);
+
     return (
       <>
-        {lists.map((ele) => {
-          return (
-            <>
-              <Col key={ele.id} xs={24} xl={8}>
-                <Card
-                  key={ele.id}
-                  size="small"
-                  title="Small size card"
-                  style={{
-                    width: 230,
-                  }}
-                >
-                  <Image width={200} src={ele.image} />
-                  <p>{ele.name}</p>
-                  <h3>${ele.price}</h3>
-                  <p>
-                    <Button type="primary">Add</Button>
-                    <Button type="primary">Edit</Button>
-                  </p>
-                </Card>
-              </Col>
-            </>
-          );
-        })}
+        <List
+          grid={{
+            gutter: 16,
+            column: 5,
+            xs: 1,
+            sm: 2,
+            md: 3,
+            lg: 4,
+            xl: 5,
+            xxl: 6,
+          }}
+          pagination={{
+            showSizeChanger: true,
+            pageSizeOptions: ["10", "50", "100", "1000"],
+            position: "bottom",
+          }}
+          dataSource={lists}
+          renderItem={(item: any) => (
+            <List.Item>
+              <Card
+                key={item.id}
+                size="small"
+                title="Small size card"
+                style={{
+                  width: 230,
+                }}
+              >
+                <Image width={200} src={item.image} />
+                <p>{item.name}</p>
+                <h3>${item.price}</h3>
+                <p>
+                  <Button type="primary">Add</Button>
+                  <Button type="primary">Edit</Button>
+                </p>
+              </Card>
+            </List.Item>
+          )}
+        />
       </>
     );
   };
@@ -62,41 +77,6 @@ function ProductModalContent() {
     <>
       {isloading && <p>Loading results...</p>}
       {!isloading && <ShowProducts results={results} />}
-
-      <Row>
-        <Col key="1" xs={24} xl={8}>
-          First
-        </Col>
-        <Col xs={24} xl={8}>
-          Second
-        </Col>
-        <Col xs={24} xl={8}>
-          First
-        </Col>
-        <Col xs={24} xl={8}>
-          Second
-        </Col>
-        <Col xs={24} xl={8}>
-          Second
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={24} xl={8}>
-          First
-        </Col>
-        <Col xs={24} xl={8}>
-          Second
-        </Col>
-        <Col xs={24} xl={8}>
-          First
-        </Col>
-        <Col xs={24} xl={8}>
-          Second
-        </Col>
-        <Col xs={24} xl={8}>
-          Second
-        </Col>
-      </Row>
     </>
   );
 }
