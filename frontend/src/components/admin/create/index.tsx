@@ -37,46 +37,51 @@ export default function Create() {
 
   const navigate = useNavigate();
   const { TextArea } = Input;
-  const initialFormData = Object.freeze({
-    name: "",
-    description: "",
-    price: "",
-    quantity: "",
-    image: "",
-  });
+  const [selected, setSelected] = useState(1);
 
-  const [formData, updateFormData] = useState(initialFormData);
+  // const initialFormData = Object.freeze({
+  //   name: "",
+  //   description: "",
+  //   category: "",
+  //   price: "",
+  //   quantity: "",
+  //   image: "",
+  // });
 
-  const handleChange = (e) => {
-    if (e.target.name == "title") {
-      updateFormData({
-        ...formData,
-        // Trimming any whitespace
-        [e.target.name]: e.target.value.trim(),
-        // ["slug"]: slugify(e.target.value.trim()),
-      });
-    } else {
-      updateFormData({
-        ...formData,
-        // Trimming any whitespace
-        [e.target.name]: e.target.value.trim(),
-      });
-    }
-  };
+  // const [formData, updateFormData] = useState(initialFormData);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleChange = (e) => {
+  //   if (e.target.name == "title") {
+  //     updateFormData({
+  //       ...formData,
+  //       // Trimming any whitespace
+  //       [e.target.name]: e.target.value.trim(),
+  //       // ["slug"]: slugify(e.target.value.trim()),
+  //     });
+  //   } else {
+  //     updateFormData({
+  //       ...formData,
+  //       // Trimming any whitespace
+  //       [e.target.name]: e.target.value.trim(),
+  //     });
+  //   }
+  // };
+
+  const handleSubmit = (value) => {
+    // e.preventDefault();
     axiosInstance
-      .post(`admin/create/`, {
-        name: formData.name,
-        description: formData.description,
-        price: formData.price,
-        quantity: formData.quantity,
-        image: formData.image,
+      .post(`product/admin/create/`, {
+        name: value.name,
+        description: value.description,
+        category: selected,
+        price: value.price,
+        quantity: value.quantity,
+        image: value.image,
       })
       .then((res) => {
         navigate("/admin/");
       });
+    console.log(selected);
   };
 
   return (
@@ -99,20 +104,27 @@ export default function Create() {
         }}
         size={"large"}
       >
-        <Form.Item label="Product name">
+        <Form.Item label="Product name" name="name">
           <Input />
         </Form.Item>
-        <Form.Item label="Product Description">
+        <Form.Item label="Product Description" name="description">
           <TextArea rows={4} />
         </Form.Item>
-        <Form.Item label="Category">
-          <Select>
-            <Select.Option value="demo">Demo1</Select.Option>
-            <Select.Option value="demo">Demo2</Select.Option>
-            <Select.Option value="demo">Demo3</Select.Option>
+        <Form.Item label="Category" name="category">
+          <Select
+            onChange={(value) => {
+              setSelected(value);
+            }}
+          >
+            <Select.Option key="2" value="2">
+              Computer
+            </Select.Option>
+            <Select.Option key="1" value="1">
+              Cellphone
+            </Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Price">
+        <Form.Item label="Price" name="price">
           <InputNumber
             stringMode
             prefix="$"
@@ -124,7 +136,7 @@ export default function Create() {
             }}
           />
         </Form.Item>
-        <Form.Item label="In Stock Quantity">
+        <Form.Item label="In Stock Quantity" name="quantity">
           <InputNumber
             min="0"
             max="1000000"
@@ -134,12 +146,14 @@ export default function Create() {
             }}
           />
         </Form.Item>
-        <Form.Item label="Add Image Link">
-          <Input addonAfter={<Button>Upload</Button>} defaultValue="https://" />
+        <Form.Item label="Add Image Link" name="image">
+          <Input addonAfter={<Button>Upload</Button>} value="https://" />
         </Form.Item>
 
         <Form.Item>
-          <Button>Add Product</Button>
+          <Button type="primary" htmlType="submit">
+            Add Product
+          </Button>
         </Form.Item>
       </Form>
       <br></br>

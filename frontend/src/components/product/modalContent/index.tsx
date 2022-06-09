@@ -56,15 +56,10 @@ function ProductModalContent({ displayType }) {
     }
     if (displayType === "Low to High") {
       setResults(sort_by_key_low_to_high(results, "price"));
-      console.log(results);
-      console.log(originResults);
     } else if (displayType === "High to Low") {
       setResults(sort_by_key_high_to_low(results, "price"));
-      console.log(results);
-      console.log(originResults);
     } else if (displayType === "Last Added") {
       setResults([...originResults]);
-      console.log(originResults);
     }
   }, [displayType]);
 
