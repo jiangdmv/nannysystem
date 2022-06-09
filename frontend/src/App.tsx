@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Home from "./components/home/";
 import Header from "./common/header/";
 import Footer from "./common/footer/";
@@ -10,6 +11,7 @@ import Create from "./components/admin/create";
 import Edit from "./components/admin/edit";
 import Delete from "./components/admin/delete";
 import "./index.css";
+import ProductDetail from "./components/productDetail";
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
             <Route path="/admin/create" element={<Create />} />
             <Route path="/admin/edit/:id" element={<Edit />} />
             <Route path="/admin/delete/:id" element={<Delete />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
           </Routes>
         </div>
         <Footer />

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { List, Card, Button, Image, Row, Col, Pagination } from "antd";
 import Item from "antd/lib/list/Item";
 import Create from "../create";
+import ProductDetail from "../../productDetail";
 
 function Admin() {
   const [results, setResults] = useState(null);
@@ -71,26 +72,28 @@ function Admin() {
           dataSource={lists}
           renderItem={(item: any) => (
             <List.Item>
-              <Card
-                key={item.id}
-                size="small"
-                title="Small size card"
-                hoverable
-                // extra={<Button>Hi</Button>}
-                style={{
-                  width: 230,
-                }}
-              >
-                <Image width={200} height={250} src={item.image} />
-                <p>{item.name}</p>
-                <h3>${item.price}</h3>
-                <p>
-                  <Button type="primary">Add</Button>
-                  <Button type="primary">
-                    <EditProduct id={item.id} />
-                  </Button>
-                </p>
-              </Card>
+              <Link to={`products/${item.id}`}>
+                <Card
+                  key={item.id}
+                  size="small"
+                  title="Small size card"
+                  hoverable
+                  // extra={<Button>Hi</Button>}
+                  style={{
+                    width: 230,
+                  }}
+                >
+                  <Image width={200} height={250} src={item.image} />
+                  <p>{item.name}</p>
+                  <h3>${item.price}</h3>
+                  <p>
+                    <Button type="primary">Add</Button>
+                    <Button type="primary">
+                      <EditProduct id={item.id} />
+                    </Button>
+                  </p>
+                </Card>
+              </Link>
             </List.Item>
           )}
         />

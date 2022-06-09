@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axiosInstance from "../../../api/axios";
+
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import {
   Button,
@@ -37,35 +38,9 @@ export default function Create() {
 
   const navigate = useNavigate();
   const { TextArea } = Input;
+
+  // ant Design Select Option get value by using primary key here.
   const [selected, setSelected] = useState(1);
-
-  // const initialFormData = Object.freeze({
-  //   name: "",
-  //   description: "",
-  //   category: "",
-  //   price: "",
-  //   quantity: "",
-  //   image: "",
-  // });
-
-  // const [formData, updateFormData] = useState(initialFormData);
-
-  // const handleChange = (e) => {
-  //   if (e.target.name == "title") {
-  //     updateFormData({
-  //       ...formData,
-  //       // Trimming any whitespace
-  //       [e.target.name]: e.target.value.trim(),
-  //       // ["slug"]: slugify(e.target.value.trim()),
-  //     });
-  //   } else {
-  //     updateFormData({
-  //       ...formData,
-  //       // Trimming any whitespace
-  //       [e.target.name]: e.target.value.trim(),
-  //     });
-  //   }
-  // };
 
   const handleSubmit = (value) => {
     // e.preventDefault();
@@ -81,7 +56,6 @@ export default function Create() {
       .then((res) => {
         navigate("/admin/");
       });
-    console.log(selected);
   };
 
   return (
