@@ -4,10 +4,10 @@ import ProductModalContent from "./modalContent";
 import { Card, Button, Image } from "antd";
 import { Table, Row, Col } from "antd";
 
-function Product() {
+function Product({ displayType }) {
   return (
     <>
-      <ProductModalContent />
+      <ProductModalContent displayType={displayType} />
     </>
   );
 }

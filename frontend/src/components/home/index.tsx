@@ -4,12 +4,18 @@ import { StatusCodes } from "http-status-codes";
 import productApi from "../../api/productApi";
 import Loader from "../../common/Loader";
 import ErrorPage from "../../common/ErrorPage";
-import { Button } from "antd";
+import { Button, Select } from "antd";
 import Product from "../product";
 import "./index.css";
-import { Select } from "antd";
 
 function Home() {
+  const { Option } = Select;
+  const optionChoices = ["Last Added", "Low to High", "High to Low"];
+  const [displayType, setType] = useState("Last Added");
+  const type = {
+    displayType: displayType,
+  };
+
   return (
     <>
       <br></br>
@@ -20,10 +26,26 @@ function Home() {
           Add Product
         </Button>{" "}
         <span className="dropdown">
-          <Select />
+          <Select
+            defaultValue="Last Added"
+            style={{
+              width: 120,
+            }}
+            onChange={(value) => {
+              setType(value);
+            }}
+          >
+            {optionChoices.map((item, index) => {
+              return (
+                <Option key={index} value={item}>
+                  {item}
+                </Option>
+              );
+            })}
+          </Select>
         </span>
       </h1>
-      <Product />
+      <Product {...type} />
       <br></br>
       <br></br>
       <br></br>

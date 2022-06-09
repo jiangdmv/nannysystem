@@ -1,16 +1,15 @@
 import React from "react";
 import Modal from "antd/lib/modal/Modal";
-import { List, Card, Button, Image, Row, Col, Pagination } from "antd";
+import { List, Card, Button, Image, Row, Col, Pagination, Select } from "antd";
 import { useState, useEffect } from "react";
 import {
   sort_by_key_low_to_high,
   sort_by_key_high_to_low,
 } from "../../../common/sort";
 
-function ProductModalContent() {
-  const [results, setResults] = useState(null);
-  const [priceLowToHigh, setPriceLowToHigh] = useState(null);
-  const [priceHighToLow, setPriceHighToLow] = useState(null);
+function ProductModalContent({ displayType }) {
+  const [results, setResults] = useState<any[]>([]);
+  const [originResults, setOriginResults] = useState<any[]>([]);
   const [isloading, setIsLoading] = useState(true);
 
   const apiUrl = "http://localhost:8000/api/product/";
@@ -21,10 +20,9 @@ function ProductModalContent() {
         const response = await fetch(apiUrl);
         if (!response.ok) throw Error("did not receive expected data");
         const result = await response.json();
-        console.log(result);
         setResults(result);
-        setPriceHighToLow(result);
-        setPriceLowToHigh(result);
+        setOriginResults([...result]);
+        console.log(result);
       } catch (err) {
         console.log(err);
       } finally {
@@ -34,28 +32,44 @@ function ProductModalContent() {
     fetchItems();
   }, []);
 
-  const Test = ({ results }) => {
-    const lists = results;
-    console.log(sort_by_key_low_to_high(lists, "price"));
-    setPriceLowToHigh(sort_by_key_low_to_high(lists, "price"));
-  };
+  //   const Test = ({ results }) => {
+  //     const lists = results;
+  //     console.log(sort_by_key_low_to_high(lists, "price"));
+  //     setPriceLowToHigh(sort_by_key_low_to_high(lists, "price"));
+  //   };
 
-  const SortPriceLowToHigh = ({ priceLowToHigh: any }) => {
-    const lists = priceLowToHigh;
-    console.log(sort_by_key_low_to_high(lists, "price"));
-    setPriceLowToHigh(sort_by_key_low_to_high(lists, "price"));
-  };
+  //   const SortPriceLowToHigh = ({ priceLowToHigh: any }) => {
+  //     const lists = priceLowToHigh;
+  //     console.log(sort_by_key_low_to_high(lists, "price"));
+  //     setPriceLowToHigh(sort_by_key_low_to_high(lists, "price"));
+  //   };
 
-  const SortPriceHighToLow = ({ priceHighToLow: any }) => {
-    const lists = priceLowToHigh;
-    console.log("run" + lists);
+  //   const SortPriceHighToLow = ({ priceHighToLow: any }) => {
+  //     const lists = priceLowToHigh;
+  //     console.log("run" + lists);
+  //     setPriceHighToLow(sort_by_key_high_to_low(lists, "price"));
+  //   };
 
-    setPriceHighToLow(sort_by_key_high_to_low(lists, "price"));
-  };
+  useEffect(() => {
+    if (isloading) {
+      return;
+    }
+    if (displayType === "Low to High") {
+      setResults(sort_by_key_low_to_high(results, "price"));
+      console.log(results);
+      console.log(originResults);
+    } else if (displayType === "High to Low") {
+      setResults(sort_by_key_high_to_low(results, "price"));
+      console.log(results);
+      console.log(originResults);
+    } else if (displayType === "Last Added") {
+      setResults([...originResults]);
+      console.log(originResults);
+    }
+  }, [displayType]);
 
   const ShowProducts = ({ results }) => {
     const lists = results;
-    console.log(lists);
 
     return (
       <>
@@ -102,16 +116,10 @@ function ProductModalContent() {
     );
   };
 
-  console.log("hi" + priceHighToLow);
   return (
     <>
       {isloading && <p>Loading results...</p>}
       {!isloading && <ShowProducts results={results} />}
-      {!isloading && <ShowProducts results={priceLowToHigh} />}
-      {!isloading && { SortPriceHighToLow } && (
-        <ShowProducts results={priceHighToLow} />
-      )}
-      {!isloading && <ShowProducts results={priceHighToLow} />}
     </>
   );
 }
