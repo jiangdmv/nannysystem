@@ -7,16 +7,21 @@ import ErrorPage from "../../common/ErrorPage";
 import { Button } from "antd";
 import Product from "../product";
 import "./index.css";
+import { Select } from "antd";
 
 function Home() {
   return (
     <>
       <br></br>
+
       <h1 className="Products">
         Products
         <Button type="primary" className="addProductButton">
           Add Product
-        </Button>
+        </Button>{" "}
+        <span className="dropdown">
+          <Select />
+        </span>
       </h1>
       <Product />
       <br></br>

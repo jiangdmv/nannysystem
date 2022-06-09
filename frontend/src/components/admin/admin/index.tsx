@@ -1,16 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../api/axios";
 import Modal from "antd/lib/modal/Modal";
+import { Link } from "react-router-dom";
 import { List, Card, Button, Image, Row, Col, Pagination } from "antd";
-import { useState, useEffect } from "react";
-import {
-  sort_by_key_low_to_high,
-  sort_by_key_high_to_low,
-} from "../../../common/sort";
+import Item from "antd/lib/list/Item";
+import Create from "../create";
 
-function ProductModalContent() {
+function Admin() {
   const [results, setResults] = useState(null);
-  const [priceLowToHigh, setPriceLowToHigh] = useState(null);
-  const [priceHighToLow, setPriceHighToLow] = useState(null);
+
   const [isloading, setIsLoading] = useState(true);
 
   const apiUrl = "http://localhost:8000/api/product/";
@@ -23,8 +21,6 @@ function ProductModalContent() {
         const result = await response.json();
         console.log(result);
         setResults(result);
-        setPriceHighToLow(result);
-        setPriceLowToHigh(result);
       } catch (err) {
         console.log(err);
       } finally {
@@ -34,23 +30,20 @@ function ProductModalContent() {
     fetchItems();
   }, []);
 
-  const Test = ({ results }) => {
-    const lists = results;
-    console.log(sort_by_key_low_to_high(lists, "price"));
-    setPriceLowToHigh(sort_by_key_low_to_high(lists, "price"));
+  const EditProduct = ({ id }) => {
+    return (
+      <>
+        <Link to={"/admin/edit/" + id}>Edit</Link>
+      </>
+    );
   };
 
-  const SortPriceLowToHigh = ({ priceLowToHigh: any }) => {
-    const lists = priceLowToHigh;
-    console.log(sort_by_key_low_to_high(lists, "price"));
-    setPriceLowToHigh(sort_by_key_low_to_high(lists, "price"));
-  };
-
-  const SortPriceHighToLow = ({ priceHighToLow: any }) => {
-    const lists = priceLowToHigh;
-    console.log("run" + lists);
-
-    setPriceHighToLow(sort_by_key_high_to_low(lists, "price"));
+  const CreateProduct = () => {
+    return (
+      <>
+        <Link to={"/admin/create/"}>Add New Product</Link>
+      </>
+    );
   };
 
   const ShowProducts = ({ results }) => {
@@ -93,6 +86,9 @@ function ProductModalContent() {
                 <h3>${item.price}</h3>
                 <p>
                   <Button type="primary">Add</Button>
+                  <Button type="primary">
+                    <EditProduct id={item.id} />
+                  </Button>
                 </p>
               </Card>
             </List.Item>
@@ -102,18 +98,19 @@ function ProductModalContent() {
     );
   };
 
-  console.log("hi" + priceHighToLow);
   return (
     <>
+      <br></br>
+      <h1 className="Products">
+        Products
+        <Button type="primary" className="addProductButton">
+          <CreateProduct />
+        </Button>{" "}
+      </h1>
       {isloading && <p>Loading results...</p>}
       {!isloading && <ShowProducts results={results} />}
-      {!isloading && <ShowProducts results={priceLowToHigh} />}
-      {!isloading && { SortPriceHighToLow } && (
-        <ShowProducts results={priceHighToLow} />
-      )}
-      {!isloading && <ShowProducts results={priceHighToLow} />}
     </>
   );
 }
 
-export default ProductModalContent;
+export default Admin;
