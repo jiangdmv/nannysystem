@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../api/axios";
 import Modal from "antd/lib/modal/Modal";
 import { Link } from "react-router-dom";
-import { List, Card, Button, Image, Row, Col, Pagination } from "antd";
+import { List, Card, Button, Image, Space, Row, Col, Pagination } from "antd";
 import Item from "antd/lib/list/Item";
 import Create from "../create";
 import ProductDetail from "../../productDetail";
@@ -72,26 +72,33 @@ function Admin() {
           dataSource={lists}
           renderItem={(item: any) => (
             <List.Item>
-              <Link to={`products/${item.id}`}>
+              <Link to={`/products/${item.id}`}>
                 <Card
                   key={item.id}
                   size="small"
-                  title="Small size card"
                   hoverable
                   // extra={<Button>Hi</Button>}
                   style={{
                     width: 230,
                   }}
                 >
-                  <Image width={200} height={250} src={item.image} />
+                  <Image width={200} height={230} src={item.image} />
                   <p>{item.name}</p>
                   <h3>${item.price}</h3>
-                  <p>
+                  <Space
+                    direction="horizontal"
+                    size="large"
+                    wrap
+                    align="center"
+                    style={{
+                      display: "flex",
+                    }}
+                  >
                     <Button type="primary">Add</Button>
                     <Button type="primary">
                       <EditProduct id={item.id} />
                     </Button>
-                  </p>
+                  </Space>
                 </Card>
               </Link>
             </List.Item>
@@ -108,7 +115,7 @@ function Admin() {
         Products
         <Button type="primary" className="addProductButton">
           <CreateProduct />
-        </Button>{" "}
+        </Button>
       </h1>
       {isloading && <p>Loading results...</p>}
       {!isloading && <ShowProducts results={results} />}

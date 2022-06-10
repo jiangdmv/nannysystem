@@ -1,62 +1,197 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../../api/axios";
 import { useNavigate, useParams } from "react-router-dom";
-import Input from "rc-input";
 
-export default function Create() {
+import {
+  Button,
+  Cascader,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+  Switch,
+  TreeSelect,
+} from "antd";
+import "./index.css";
+
+export default function Edit() {
+  function slugify(string) {
+    const a =
+      "àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;";
+    const b =
+      "aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------";
+    const p = new RegExp(a.split("").join("|"), "g");
+
+    return string
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, "-") // Replace spaces with -
+      .replace(p, (c) => b.charAt(a.indexOf(c))) // Replace special characters
+      .replace(/&/g, "-and-") // Replace & with 'and'
+      .replace(/[^\w\-]+/g, "") // Remove all non-word characters
+      .replace(/\-\-+/g, "-") // Replace multiple - with single -
+      .replace(/^-+/, "") // Trim - from start of text
+      .replace(/-+$/, ""); // Trim - from end of text
+  }
+
   const navigate = useNavigate();
   const { id } = useParams();
+  const { TextArea } = Input;
+
   const initialFormData = Object.freeze({
     id: "",
-    title: "",
-    slug: "",
-    excerpt: "",
-    content: "",
+    name: "",
+    description: "",
+    category: 1,
+    price: "",
+    quantity: "",
+    image: "",
   });
 
+  // ant Design Select Option get value by using primary key here.
+  const [selected, setSelected] = useState(1);
+  const [isloading, setIsLoading] = useState(true);
   const [formData, updateFormData] = useState(initialFormData);
 
   useEffect(() => {
-    axiosInstance.get("admin/edit/postdetail/" + id).then((res) => {
-      updateFormData({
-        ...formData,
-        ["title"]: res.data.title,
-        ["excerpt"]: res.data.excerpt,
-        ["slug"]: res.data.slug,
-        ["content"]: res.data.content,
+    axiosInstance
+      .get("product/admin/edit/postdetail/" + id + "/")
+      .then((res) => {
+        updateFormData({
+          ...formData,
+          ["id"]: res.data.id,
+          ["name"]: res.data.name,
+          ["description"]: res.data.description,
+          ["category"]: res.data.category,
+          ["price"]: res.data.price,
+          ["quantity"]: res.data.quantity,
+          ["image"]: res.data.image,
+        });
+        console.log("hihi" + res.data);
       });
-      console.log(res.data);
-    });
   }, [updateFormData]);
 
-  const handleChange = (e) => {
-    updateFormData({
-      ...formData,
-      // Trimming any whitespace
-      [e.target.name]: e.target.value.trim(),
-    });
-  };
+  // const apiUrl = "http://localhost:8000/api/product/";
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  // useEffect(() => {
+  //   const fetchItems = async () => {
+  //     try {
+  //       const response = await fetch(apiUrl + "admin/edit/postdetail/" + id);
+  //       if (!response.ok) throw Error("did not receive expected data");
+  //       const result = await response.json();
+  //       updateFormData({
+  //         ...formData,
+  //         ["id"]: result.id,
+  //         ["name"]: result.name,
+  //         ["description"]: result.description,
+  //         ["category"]: result.category,
+  //         ["price"]: result.price,
+  //         ["quantity"]: result.quantity,
+  //         ["image"]: result.image,
+  //       });
+  //       console.log("hihi" + result);
+  //     } catch (err) {
+  //       console.log(err);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchItems();
+  // }, [updateFormData]);
 
-    axiosInstance.put(`admin/edit/` + id + "/", {
-      title: formData.title,
-      slug: formData.slug,
-      author: 1,
-      excerpt: formData.excerpt,
-      content: formData.content,
-    });
-    navigate({
-      pathname: "/admin/",
-    });
-    window.location.reload();
+  const handleSubmit = (value) => {
+    // e.preventDefault();
+    axiosInstance
+      .put(`product/admin/edit/` + id + "/", {
+        name: value.name,
+        description: value.description,
+        category: selected,
+        price: value.price,
+        quantity: value.quantity,
+        image: value.image,
+      })
+      .then((res) => {
+        navigate("/admin/");
+      });
   };
 
   return (
-    <>
-      <Input></Input>
-    </>
+    <div className="form">
+      <br></br>
+      <br></br>
+      <h1>Edit Product</h1>
+      <br></br>
+      <Form
+        onFinish={handleSubmit}
+        labelCol={{
+          span: 4,
+        }}
+        wrapperCol={{
+          span: 14,
+        }}
+        layout="vertical"
+        initialValues={{
+          size: 9,
+        }}
+        size={"large"}
+      >
+        <Form.Item label="Product name" name="name">
+          <Input value={formData.name} />
+        </Form.Item>
+        <Form.Item label="Product Description" name="description">
+          <TextArea rows={4} value={formData.description} />
+        </Form.Item>
+        <Form.Item label="Category" name="category">
+          <Select
+            onChange={(value) => {
+              setSelected(value);
+            }}
+          >
+            <Select.Option key="2" value="2">
+              Computer
+            </Select.Option>
+            <Select.Option key="1" value="1">
+              Cellphone
+            </Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Price" name="price">
+          <InputNumber
+            stringMode
+            prefix="$"
+            min="0"
+            max="1000000"
+            step="0.01"
+            value={formData.price}
+            style={{
+              width: "100%",
+            }}
+          />
+        </Form.Item>
+        <Form.Item label="In Stock Quantity" name="quantity">
+          <InputNumber
+            min="0"
+            max="1000000"
+            step="1"
+            value={formData.quantity}
+            style={{
+              width: "100%",
+            }}
+          />
+        </Form.Item>
+        <Form.Item label="Add Image Link" name="image">
+          <Input addonAfter={<Button>Upload</Button>} value={formData.name} />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Add Product
+          </Button>
+        </Form.Item>
+      </Form>
+      <br></br>
+    </div>
   );
 }

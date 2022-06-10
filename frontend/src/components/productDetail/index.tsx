@@ -26,7 +26,7 @@ function ProductDetail() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(apiUrl + id);
+        const response = await fetch(apiUrl + id + "/");
         if (!response.ok) throw Error("did not receive expected data");
         const result = await response.json();
         setItem(result);
