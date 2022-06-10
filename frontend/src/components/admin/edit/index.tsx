@@ -121,6 +121,7 @@ export default function Edit() {
   console.log(formData);
   console.log(formData.name);
 
+  // https://codesandbox.io/s/modern-forest-bpolt
   // https://stackoverflow.com/questions/63711080/how-to-set-value-dynamically-inside-form-list-using-setfieldsvalue-in-antd-4
 
   return (
@@ -132,7 +133,7 @@ export default function Edit() {
       <Form
         onFinish={handleSubmit}
         form={form}
-        initialValues={formData}
+        // initialValues={formData}
         labelCol={{
           span: 4,
         }}
@@ -144,9 +145,11 @@ export default function Edit() {
       >
         <Form.Item label="Product name" name="name">
           <Input value={formData.name} />
+          <></>
         </Form.Item>
         <Form.Item label="Product Description" name="description">
           <TextArea rows={4} value={formData.description} />
+          <></>
         </Form.Item>
         <Form.Item label="Category" name="category">
           <Select
@@ -161,6 +164,7 @@ export default function Edit() {
               Cellphone
             </Select.Option>
           </Select>
+          <></>
         </Form.Item>
         <Form.Item label="Price" name="price">
           <InputNumber
@@ -174,6 +178,7 @@ export default function Edit() {
               width: "100%",
             }}
           />
+          <></>
         </Form.Item>
         <Form.Item label="In Stock Quantity" name="quantity">
           <InputNumber
@@ -185,9 +190,11 @@ export default function Edit() {
               width: "100%",
             }}
           />
+          <></>
         </Form.Item>
         <Form.Item label="Add Image Link" name="image">
-          <Input addonAfter={<Button>Upload</Button>} value={formData.name} />
+          <Input addonAfter={<Button>Upload</Button>} value={formData.image} />
+          <></>
         </Form.Item>
 
         <Form.Item>
