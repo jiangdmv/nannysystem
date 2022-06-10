@@ -39,8 +39,9 @@ export default function Edit() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { TextArea } = Input;
+  const [form] = Form.useForm();
 
-  const initialFormData = Object.freeze({
+  const initialFormData = {
     id: "",
     name: "",
     description: "",
@@ -48,7 +49,7 @@ export default function Edit() {
     price: "",
     quantity: "",
     image: "",
-  });
+  };
 
   // ant Design Select Option get value by using primary key here.
   const [selected, setSelected] = useState(1);
@@ -69,7 +70,7 @@ export default function Edit() {
           ["quantity"]: res.data.quantity,
           ["image"]: res.data.image,
         });
-        console.log("hihi" + res.data);
+        form.setFieldsValue(formData);
       });
   }, [updateFormData]);
 
@@ -117,6 +118,11 @@ export default function Edit() {
       });
   };
 
+  console.log(formData);
+  console.log(formData.name);
+
+  // https://stackoverflow.com/questions/63711080/how-to-set-value-dynamically-inside-form-list-using-setfieldsvalue-in-antd-4
+
   return (
     <div className="form">
       <br></br>
@@ -125,6 +131,8 @@ export default function Edit() {
       <br></br>
       <Form
         onFinish={handleSubmit}
+        form={form}
+        initialValues={formData}
         labelCol={{
           span: 4,
         }}
@@ -132,9 +140,6 @@ export default function Edit() {
           span: 14,
         }}
         layout="vertical"
-        initialValues={{
-          size: 9,
-        }}
         size={"large"}
       >
         <Form.Item label="Product name" name="name">
@@ -187,7 +192,7 @@ export default function Edit() {
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Add Product
+            Submit
           </Button>
         </Form.Item>
       </Form>
