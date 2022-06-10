@@ -56,12 +56,29 @@ export default function Edit() {
   const [isloading, setIsLoading] = useState(true);
   const [formData, updateFormData] = useState(initialFormData);
 
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get("product/admin/edit/postdetail/" + id + "/")
+  //     .then((res) => {
+  //       updateFormData({
+  //         ...formData,
+  //         ["id"]: res.data.id,
+  //         ["name"]: res.data.name,
+  //         ["description"]: res.data.description,
+  //         ["category"]: res.data.category,
+  //         ["price"]: res.data.price,
+  //         ["quantity"]: res.data.quantity,
+  //         ["image"]: res.data.image,
+  //       });
+  //       form.setFieldsValue(formData);
+  //     });
+  // }, []);
+
   useEffect(() => {
     axiosInstance
       .get("product/admin/edit/postdetail/" + id + "/")
       .then((res) => {
-        updateFormData({
-          ...formData,
+        form.setFieldsValue({
           ["id"]: res.data.id,
           ["name"]: res.data.name,
           ["description"]: res.data.description,
@@ -70,9 +87,8 @@ export default function Edit() {
           ["quantity"]: res.data.quantity,
           ["image"]: res.data.image,
         });
-        form.setFieldsValue(formData);
       });
-  }, [updateFormData]);
+  }, []);
 
   // const apiUrl = "http://localhost:8000/api/product/";
 
@@ -104,6 +120,7 @@ export default function Edit() {
 
   const handleSubmit = (value) => {
     // e.preventDefault();
+    console.log(value);
     axiosInstance
       .put(`product/admin/edit/` + id + "/", {
         name: value.name,
@@ -124,9 +141,9 @@ export default function Edit() {
   // https://codesandbox.io/s/modern-forest-bpolt
   // https://stackoverflow.com/questions/63711080/how-to-set-value-dynamically-inside-form-list-using-setfieldsvalue-in-antd-4
 
-  useEffect(() => {
-    form.resetFields();
-  }, [updateFormData]);
+  // useEffect(() => {
+  //   form.resetFields();
+  // }, []);
 
   const DeleteProduct = ({ id }) => {
     return (
@@ -144,8 +161,8 @@ export default function Edit() {
       <br></br>
       <Form
         onFinish={handleSubmit}
-        // form={form}
-        initialValues={formData}
+        form={form}
+        // initialValues={formData}
         labelCol={{
           span: 4,
         }}
@@ -156,10 +173,10 @@ export default function Edit() {
         size={"large"}
       >
         <Form.Item label="Product name" name="name">
-          <Input value={formData.name} />
+          <Input />
         </Form.Item>
         <Form.Item label="Product Description" name="description">
-          <TextArea rows={4} value={formData.description} />
+          <TextArea rows={4} />
         </Form.Item>
         <Form.Item label="Category" name="category">
           <Select
@@ -182,7 +199,6 @@ export default function Edit() {
             min="0"
             max="1000000"
             step="0.01"
-            value={formData.price}
             style={{
               width: "100%",
             }}
@@ -193,14 +209,13 @@ export default function Edit() {
             min="0"
             max="1000000"
             step="1"
-            value={formData.quantity}
             style={{
               width: "100%",
             }}
           />
         </Form.Item>
         <Form.Item label="Add Image Link" name="image">
-          <Input addonAfter={<Button>Upload</Button>} value={formData.image} />
+          <Input addonAfter={<Button>Upload</Button>} />
         </Form.Item>
 
         <Form.Item>

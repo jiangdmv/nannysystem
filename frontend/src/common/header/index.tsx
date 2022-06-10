@@ -29,7 +29,6 @@ const Header = () => {
         </div>
 
         <div className="signIn">
-          <UserOutlined />
           {isLoggdIn ? (
             <Logout handleLogout={() => setIsLoggedin(false)} />
           ) : (

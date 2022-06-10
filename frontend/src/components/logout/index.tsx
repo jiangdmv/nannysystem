@@ -1,8 +1,8 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Avatar } from "antd";
 import { StatusCodes } from "http-status-codes";
 import { useEffect } from "react";
-
+import { UserOutlined } from "@ant-design/icons";
 import api from "../../api/loginApi";
 import axiosInstance from "../../api/axios";
 import LOGIN_FORM from "../../content/form";
@@ -44,9 +44,17 @@ const LogoutButton = ({ handleLogout }) => {
   // };
 
   return (
-    <Button type="primary" onClick={handleLogout}>
-      {LOGIN_FORM.LOGOUT}
-    </Button>
+    <>
+      <Avatar
+        style={{
+          backgroundColor: "#87d068",
+        }}
+        icon={<UserOutlined />}
+      />
+      <Button type="primary" onClick={handleLogout}>
+        {LOGIN_FORM.LOGOUT}
+      </Button>
+    </>
   );
 };
 

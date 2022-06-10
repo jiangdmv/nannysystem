@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Button } from "antd";
-
+import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import LOGIN_FORM from "../../content/form";
 import Modal from "../../common/modal";
 import ModalContent from "./modalContent";
@@ -18,6 +18,7 @@ const Login = ({ handleLogin, handleLoading, handleHasError }) => {
 
   return (
     <>
+      <UserOutlined />
       <Button type="primary" onClick={() => setVisible(true)}>
         {LOGIN_FORM.LOGINBUTTON}
       </Button>

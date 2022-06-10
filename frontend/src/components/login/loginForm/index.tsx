@@ -38,7 +38,7 @@ const Form = ({
 
   const [check, setCheck] = useState(false);
 
-  // Return emtpy stirng if there is no error
+  // Return empty stirng if there is no error
   const validateEmailFEAndSetErrorMessage = () => {
     let errorMessage = "";
     if (!validator.isEmail(email.value)) {
@@ -51,7 +51,7 @@ const Form = ({
     return errorMessage;
   };
 
-  // Return emtpy stirng if there is no error
+  // Return empty stirng if there is no error
   const validatePasswordFEAndSetErrorMessage = () => {
     let errorMessage = "";
     if (!validator.isStrongPassword(password.value)) {
