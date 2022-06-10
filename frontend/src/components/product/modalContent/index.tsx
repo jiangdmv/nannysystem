@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "antd/lib/modal/Modal";
 import { List, Card, Button, Image, Row, Col, Pagination, Select } from "antd";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   sort_by_key_low_to_high,
   sort_by_key_high_to_low,
@@ -87,23 +88,25 @@ function ProductModalContent({ displayType }) {
           dataSource={lists}
           renderItem={(item: any) => (
             <List.Item>
-              <Card
-                key={item.id}
-                size="small"
-                title="Small size card"
-                hoverable
-                // extra={<Button>Hi</Button>}
-                style={{
-                  width: 230,
-                }}
-              >
-                <Image width={200} height={250} src={item.image} />
-                <p>{item.name}</p>
-                <h3>${item.price}</h3>
-                <p>
-                  <Button type="primary">Add</Button>
-                </p>
-              </Card>
+              <Link to={`products/${item.id}`}>
+                <Card
+                  key={item.id}
+                  size="small"
+                  title="Small size card"
+                  hoverable
+                  // extra={<Button>Hi</Button>}
+                  style={{
+                    width: 230,
+                  }}
+                >
+                  <Image width={200} height={250} src={item.image} />
+                  <p>{item.name}</p>
+                  <h3>${item.price}</h3>
+                  <p>
+                    <Button type="primary">Add</Button>
+                  </p>
+                </Card>
+              </Link>
             </List.Item>
           )}
         />

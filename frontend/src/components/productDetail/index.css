@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.inbox {
+  float: right;
+}
+
+.right {
+  float: right;
+}
