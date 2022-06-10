@@ -12,7 +12,7 @@ import {
   Select,
 } from "antd";
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 function ProductDetail() {
   const navigate = useNavigate();
@@ -39,6 +39,14 @@ function ProductDetail() {
     };
     fetchItems();
   }, []);
+
+  const EditProduct = ({ id }) => {
+    return (
+      <>
+        <Link to={"/admin/edit/" + id}>Edit</Link>
+      </>
+    );
+  };
 
   const ShowProductDetail = ({ item }) => {
     return (
@@ -93,7 +101,9 @@ function ProductDetail() {
                 }}
               >
                 <Button type="primary">Add To Cart</Button>
-                <Button type="primary">Edit</Button>
+                <Button type="primary">
+                  <EditProduct id={item.id} />
+                </Button>
               </Space>
             </Card>
           </Space>

@@ -10,7 +10,7 @@ export default function Create() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axiosInstance
-      .delete("admin/delete/" + id)
+      .delete("product/admin/delete/" + id)
       .catch(function (error) {
         if (error.response) {
           console.log(error.response.data);
@@ -28,7 +28,14 @@ export default function Create() {
 
   return (
     <>
-      <Button></Button>
+      <Button
+        type="primary"
+        htmlType="submit"
+        color="red"
+        onClick={handleSubmit}
+      >
+        Delete This Product
+      </Button>
     </>
   );
 }

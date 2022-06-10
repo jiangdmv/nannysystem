@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../../api/axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 import {
   Button,
@@ -124,6 +124,18 @@ export default function Edit() {
   // https://codesandbox.io/s/modern-forest-bpolt
   // https://stackoverflow.com/questions/63711080/how-to-set-value-dynamically-inside-form-list-using-setfieldsvalue-in-antd-4
 
+  useEffect(() => {
+    form.resetFields();
+  }, [updateFormData]);
+
+  const DeleteProduct = ({ id }) => {
+    return (
+      <>
+        <Link to={"/admin/delete/" + id}>Delete This Product</Link>
+      </>
+    );
+  };
+
   return (
     <div className="form">
       <br></br>
@@ -132,8 +144,8 @@ export default function Edit() {
       <br></br>
       <Form
         onFinish={handleSubmit}
-        form={form}
-        // initialValues={formData}
+        // form={form}
+        initialValues={formData}
         labelCol={{
           span: 4,
         }}
@@ -145,11 +157,9 @@ export default function Edit() {
       >
         <Form.Item label="Product name" name="name">
           <Input value={formData.name} />
-          <></>
         </Form.Item>
         <Form.Item label="Product Description" name="description">
           <TextArea rows={4} value={formData.description} />
-          <></>
         </Form.Item>
         <Form.Item label="Category" name="category">
           <Select
@@ -164,7 +174,6 @@ export default function Edit() {
               Cellphone
             </Select.Option>
           </Select>
-          <></>
         </Form.Item>
         <Form.Item label="Price" name="price">
           <InputNumber
@@ -178,7 +187,6 @@ export default function Edit() {
               width: "100%",
             }}
           />
-          <></>
         </Form.Item>
         <Form.Item label="In Stock Quantity" name="quantity">
           <InputNumber
@@ -190,16 +198,19 @@ export default function Edit() {
               width: "100%",
             }}
           />
-          <></>
         </Form.Item>
         <Form.Item label="Add Image Link" name="image">
           <Input addonAfter={<Button>Upload</Button>} value={formData.image} />
-          <></>
         </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" color="red">
+            <DeleteProduct id={formData.id} />
           </Button>
         </Form.Item>
       </Form>
