@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./components/home/";
-import Header from "./common/header/";
+import Header from "./common/header/index";
 import Footer from "./common/footer/";
 import CreateProduct from "./components/createProduct";
 import RegisterEmailPage from "./common/RegisterEmailPage";

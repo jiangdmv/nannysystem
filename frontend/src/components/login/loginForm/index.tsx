@@ -21,49 +21,55 @@ import history from "history/browser";
 //npm i --save-dev @types/react-html-parser
 //npm i --save-dev @types/validator
 const Form = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  handleSubmit,
   handleOnLogin,
   handleOnClickRegister = () => {},
   handleOnClickResetPassword = () => {},
   handleOnLoginOK,
 }) => {
-  const [email, setEmail] = useState({
-    value: "",
-    errorMessage: "",
-  });
-  const [password, setPassword] = useState({
-    value: "",
-    errorMessage: "",
-    status: CONSTANTS.VERFI_CODE_STATUS.SEND,
-  });
+  // const [email, setEmail] = useState({
+  //   value: "",
+  //   errorMessage: "",
+  // });
+  // const [password, setPassword] = useState({
+  //   value: "",
+  //   errorMessage: "",
+  //   status: CONSTANTS.VERFI_CODE_STATUS.SEND,
+  // });
 
   const [check, setCheck] = useState(false);
 
-  // Return empty stirng if there is no error
-  const validateEmailFEAndSetErrorMessage = () => {
-    let errorMessage = "";
-    if (!validator.isEmail(email.value)) {
-      errorMessage = LOGIN_FORM.EMAIL.ERROR_MESSAGE;
-    }
-    setEmail({
-      ...email,
-      errorMessage,
-    });
-    return errorMessage;
-  };
+  // // Return empty stirng if there is no error
+  // const validateEmailFEAndSetErrorMessage = () => {
+  //   let errorMessage = "";
+  //   if (!validator.isEmail(email.value)) {
+  //     errorMessage = LOGIN_FORM.EMAIL.ERROR_MESSAGE;
+  //   }
+  //   setEmail({
+  //     ...email,
+  //     errorMessage,
+  //   });
+  //   return errorMessage;
+  // };
 
-  // Return empty stirng if there is no error
-  const validatePasswordFEAndSetErrorMessage = () => {
-    let errorMessage = "";
-    if (!validator.isStrongPassword(password.value)) {
-      errorMessage = LOGIN_FORM.PASSWORD.ERROR_MESSAGE;
-    }
-    setEmail({
-      ...password,
-      errorMessage,
-    });
-    return errorMessage;
-  };
+  // // Return empty stirng if there is no error
+  // const validatePasswordFEAndSetErrorMessage = () => {
+  //   let errorMessage = "";
+  //   if (!validator.isStrongPassword(password.value)) {
+  //     errorMessage = LOGIN_FORM.PASSWORD.ERROR_MESSAGE;
+  //   }
+  //   setEmail({
+  //     ...password,
+  //     errorMessage,
+  //   });
+  //   return errorMessage;
+  // };
 
+  /*
   const handleSubmit = async () => {
     const emailError = validateEmailFEAndSetErrorMessage();
     const passwordError = validatePasswordFEAndSetErrorMessage();
@@ -98,6 +104,9 @@ const Form = ({
       // }
     }
   };
+
+*/
+
   useEffect(() => {}, []);
   return (
     <>
