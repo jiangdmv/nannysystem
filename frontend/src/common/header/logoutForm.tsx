@@ -7,6 +7,7 @@ import api from "../../api/loginApi";
 import axiosInstance from "../../api/axios";
 import LOGIN_FORM from "../../content/form";
 import history from "history/browser";
+// import { BsPersonCheckFill } from "react-icons/bs";
 import "antd/dist/antd.css";
 
 const LogoutButton = ({ handleLogout }) => {
@@ -47,10 +48,12 @@ const LogoutButton = ({ handleLogout }) => {
     <>
       <Avatar
         style={{
-          backgroundColor: "#87d068",
+          backgroundColor: "blue",
         }}
         icon={<UserOutlined />}
+        // icon={<BsPersonCheckFill />}
       />
+
       <Button type="primary" onClick={handleLogout}>
         {LOGIN_FORM.LOGOUT}
       </Button>

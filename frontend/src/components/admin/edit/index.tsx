@@ -13,6 +13,8 @@ import {
   Select,
   Switch,
   TreeSelect,
+  Image,
+  Card,
 } from "antd";
 import "./index.css";
 
@@ -79,6 +81,15 @@ export default function Edit() {
       .get("product/admin/edit/postdetail/" + id + "/")
       .then((res) => {
         form.setFieldsValue({
+          ["id"]: res.data.id,
+          ["name"]: res.data.name,
+          ["description"]: res.data.description,
+          ["category"]: res.data.category,
+          ["price"]: res.data.price,
+          ["quantity"]: res.data.quantity,
+          ["image"]: res.data.image,
+        });
+        updateFormData({
           ["id"]: res.data.id,
           ["name"]: res.data.name,
           ["description"]: res.data.description,
@@ -216,6 +227,19 @@ export default function Edit() {
         </Form.Item>
         <Form.Item label="Add Image Link" name="image">
           <Input addonAfter={<Button>Upload</Button>} />
+        </Form.Item>
+
+        <Form.Item>
+          <Card
+            size="small"
+            hoverable
+            // extra={<Button>Hi</Button>}
+            style={{
+              width: 530,
+            }}
+          >
+            <Image width={500} height={530} src={formData.image} />
+          </Card>
         </Form.Item>
 
         <Form.Item>
