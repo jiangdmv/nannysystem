@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./index.css";
 import Login from "./loginForm";
 import Logout from "./logoutForm";
+import Cart from "../../components/cart";
 import SearchBar from "../searchBar";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import axiosInstance from "../../api/axios";
@@ -12,6 +13,7 @@ const Header = () => {
   const [hassError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
+  const [cartVisible, setCartVisible] = useState(false);
 
   const [email, setEmail] = useState({
     value: "",
@@ -97,7 +99,7 @@ const Header = () => {
         </div>
         <div className="cart">
           <ShoppingCartOutlined />
-          Cart
+          <Cart cartVisible={cartVisible} setCartVisible={setCartVisible} />
         </div>
       </div>
     </>

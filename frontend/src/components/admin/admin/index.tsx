@@ -104,6 +104,8 @@ function Admin() {
             </List.Item>
           )}
         />
+        <br></br>
+        <br></br>
       </>
     );
   };
@@ -111,6 +113,7 @@ function Admin() {
   return (
     <>
       <br></br>
+
       <h1 className="Products">
         Products
         <Button type="primary" className="addProductButton">

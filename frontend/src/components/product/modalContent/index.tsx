@@ -3,6 +3,7 @@ import Modal from "antd/lib/modal/Modal";
 import { List, Card, Button, Image, Row, Col, Pagination, Select } from "antd";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import {
   sort_by_key_low_to_high,
   sort_by_key_high_to_low,
@@ -12,6 +13,8 @@ function ProductModalContent({ displayType }) {
   const [results, setResults] = useState<any[]>([]);
   const [originResults, setOriginResults] = useState<any[]>([]);
   const [isloading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { product, cartQuantity } = useSelector((state) => state.cart);
 
   const apiUrl = "http://localhost:8000/api/product/";
 
@@ -67,6 +70,14 @@ function ProductModalContent({ displayType }) {
   const ShowProducts = ({ results }) => {
     const lists = results;
 
+    const AddToCart = () => {
+      return (
+        <>
+          <div>AddToCart</div>
+        </>
+      );
+    };
+
     return (
       <>
         <List
@@ -102,7 +113,9 @@ function ProductModalContent({ displayType }) {
                   <p>{item.name}</p>
                   <h3>${item.price}</h3>
                   <p>
-                    <Button type="primary">Add</Button>
+                    <Button type="primary">
+                      <AddToCart />
+                    </Button>
                   </p>
                 </Card>
               </Link>
