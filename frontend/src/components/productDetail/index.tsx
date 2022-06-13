@@ -13,6 +13,16 @@ import {
 } from "antd";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  clearCart,
+  addToCart,
+  removeItem,
+  increase,
+  decrease,
+  calculateTotals,
+} from "../../app/cartSlice";
 
 function ProductDetail() {
   const navigate = useNavigate();
@@ -20,6 +30,8 @@ function ProductDetail() {
 
   const [item, setItem] = useState<any[]>([]);
   const [isloading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { cartItems, amount, total } = useSelector((store) => store.cart);
 
   const apiUrl = "http://localhost:8000/api/product/";
 
@@ -44,6 +56,22 @@ function ProductDetail() {
     return (
       <>
         <Link to={"/admin/edit/" + id}>Edit</Link>
+      </>
+    );
+  };
+
+  const AddToCart = ({ item }) => {
+    item.amount = 1;
+    return (
+      <>
+        <Button
+          type="primary"
+          onClick={() => {
+            dispatch(addToCart(item));
+          }}
+        >
+          AddToCart
+        </Button>
       </>
     );
   };
@@ -100,7 +128,35 @@ function ProductDetail() {
                   display: "flex",
                 }}
               >
-                <Button type="primary">Add To Cart</Button>
+                {cartItems.includes(item) ? (
+                  <div>
+                    {" "}
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        if (item.amount === 1) {
+                          dispatch(removeItem(item.id));
+                          return;
+                        }
+                        dispatch(decrease(item));
+                      }}
+                    >
+                      <MinusOutlined />
+                    </Button>
+                    <Button type="primary">{item.amount}</Button>
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        dispatch(increase(item));
+                      }}
+                    >
+                      <PlusOutlined />
+                    </Button>
+                  </div>
+                ) : (
+                  <AddToCart item={item} />
+                )}
+
                 <Button type="primary">
                   <EditProduct id={item.id} />
                 </Button>

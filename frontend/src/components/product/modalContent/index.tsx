@@ -4,11 +4,19 @@ import { List, Card, Button, Image, Row, Col, Pagination, Select } from "antd";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   sort_by_key_low_to_high,
   sort_by_key_high_to_low,
 } from "../../../common/sort";
-import { updateCart } from "../../../app/cartSlice";
+import {
+  clearCart,
+  addToCart,
+  removeItem,
+  increase,
+  decrease,
+  calculateTotals,
+} from "../../../app/cartSlice";
 
 function ProductModalContent({ displayType }) {
   const [results, setResults] = useState<any[]>([]);
@@ -70,17 +78,14 @@ function ProductModalContent({ displayType }) {
     }
   }, [displayType]);
 
-  const AddProduct = () => {
-    dispatch(updateCart());
-  };
-
-  const AddToCart = () => {
+  const AddToCart = ({ item }) => {
+    item.amount = 1;
     return (
       <>
         <Button
           type="primary"
           onClick={() => {
-            dispatch(AddProduct());
+            dispatch(addToCart(item));
           }}
         >
           AddToCart
@@ -113,24 +118,49 @@ function ProductModalContent({ displayType }) {
           dataSource={lists}
           renderItem={(item: any) => (
             <List.Item>
-              <Link to={`products/${item.id}`}>
-                <Card
-                  key={item.id}
-                  size="small"
-                  hoverable
-                  // extra={<Button>Hi</Button>}
-                  style={{
-                    width: 230,
-                  }}
-                >
+              <Card
+                key={item.id}
+                size="small"
+                hoverable
+                // extra={<Button>Hi</Button>}
+                style={{
+                  width: 230,
+                }}
+              >
+                <Link to={`products/${item.id}`}>
                   <Image width={200} height={230} src={item.image} />
                   <p>{item.name}</p>
                   <h3>${item.price}</h3>
-                  <p>
-                    <AddToCart />
-                  </p>
-                </Card>
-              </Link>
+                </Link>
+                {cartItems.includes(item) ? (
+                  <div>
+                    {" "}
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        if (item.amount === 1) {
+                          dispatch(removeItem(item.id));
+                          return;
+                        }
+                        dispatch(decrease(item));
+                      }}
+                    >
+                      <MinusOutlined />
+                    </Button>
+                    <Button type="primary">{item.amount}</Button>
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        dispatch(increase(item));
+                      }}
+                    >
+                      <PlusOutlined />
+                    </Button>
+                  </div>
+                ) : (
+                  <AddToCart item={item} />
+                )}
+              </Card>
             </List.Item>
           )}
         />
