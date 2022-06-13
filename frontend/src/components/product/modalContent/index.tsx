@@ -8,13 +8,16 @@ import {
   sort_by_key_low_to_high,
   sort_by_key_high_to_low,
 } from "../../../common/sort";
+import { updateCart } from "../../../app/cartSlice";
 
 function ProductModalContent({ displayType }) {
   const [results, setResults] = useState<any[]>([]);
   const [originResults, setOriginResults] = useState<any[]>([]);
   const [isloading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-  const { product, cartQuantity } = useSelector((state) => state.cart);
+
+  const { cartItems, amount, total } = useSelector((store) => store.cart);
+  console.log(amount);
 
   const apiUrl = "http://localhost:8000/api/product/";
 
@@ -67,16 +70,27 @@ function ProductModalContent({ displayType }) {
     }
   }, [displayType]);
 
+  const AddProduct = () => {
+    dispatch(updateCart());
+  };
+
+  const AddToCart = () => {
+    return (
+      <>
+        <Button
+          type="primary"
+          onClick={() => {
+            dispatch(AddProduct());
+          }}
+        >
+          AddToCart
+        </Button>
+      </>
+    );
+  };
+
   const ShowProducts = ({ results }) => {
     const lists = results;
-
-    const AddToCart = () => {
-      return (
-        <>
-          <div>AddToCart</div>
-        </>
-      );
-    };
 
     return (
       <>
@@ -113,9 +127,7 @@ function ProductModalContent({ displayType }) {
                   <p>{item.name}</p>
                   <h3>${item.price}</h3>
                   <p>
-                    <Button type="primary">
-                      <AddToCart />
-                    </Button>
+                    <AddToCart />
                   </p>
                 </Card>
               </Link>
