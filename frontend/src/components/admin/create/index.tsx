@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axiosInstance from "../../../api/axios";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate, Link } from "react-router-dom";
 import {
   Button,
@@ -125,7 +126,11 @@ export default function Create() {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            onClick={() => toast("Added a new product!")}
+          >
             Add Product
           </Button>
         </Form.Item>

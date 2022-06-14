@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../../../api/axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
@@ -243,7 +245,13 @@ export default function Edit() {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            onClick={() => {
+              toast("The product details have been updated.");
+            }}
+          >
             Submit
           </Button>
         </Form.Item>
