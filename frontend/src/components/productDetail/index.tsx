@@ -33,6 +33,10 @@ function ProductDetail() {
   const dispatch = useDispatch();
   const { cartItems, amount, total } = useSelector((store) => store.cart);
 
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [cartItems]);
+
   const apiUrl = "http://localhost:8000/api/product/";
 
   useEffect(() => {
@@ -61,7 +65,6 @@ function ProductDetail() {
   };
 
   const AddToCart = ({ item }) => {
-    item.amount = 1;
     return (
       <>
         <Button
@@ -128,7 +131,8 @@ function ProductDetail() {
                   display: "flex",
                 }}
               >
-                {cartItems.includes(item) ? (
+                {cartItems.some((ele) => ele.id === item.id) ? (
+                  // cartItems.includes(item)
                   <div>
                     {" "}
                     <Button
@@ -143,7 +147,13 @@ function ProductDetail() {
                     >
                       <MinusOutlined />
                     </Button>
-                    <Button type="primary">{item.amount}</Button>
+                    <Button type="primary">
+                      {
+                        cartItems[
+                          cartItems.findIndex((ele) => ele.id === item.id)
+                        ].cartQuantity
+                      }
+                    </Button>
                     <Button
                       type="primary"
                       onClick={() => {

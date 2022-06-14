@@ -78,7 +78,7 @@ const CartModalContent = () => {
                 <Button
                   type="primary"
                   onClick={() => {
-                    if (item.amount === 1) {
+                    if (item.cartQuantity === 1) {
                       dispatch(removeItem(item.id));
                       return;
                     }
@@ -87,7 +87,7 @@ const CartModalContent = () => {
                 >
                   <MinusOutlined />
                 </Button>
-                <Button type="primary">{item.amount}</Button>
+                <Button type="primary">{item.cartQuantity}</Button>
                 <Button
                   type="primary"
                   onClick={() => {

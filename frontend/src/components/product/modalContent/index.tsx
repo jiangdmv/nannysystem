@@ -25,7 +25,10 @@ function ProductModalContent({ displayType }) {
   const dispatch = useDispatch();
 
   const { cartItems, amount, total } = useSelector((store) => store.cart);
-  console.log(amount);
+
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [cartItems]);
 
   const apiUrl = "http://localhost:8000/api/product/";
 
@@ -79,7 +82,6 @@ function ProductModalContent({ displayType }) {
   }, [displayType]);
 
   const AddToCart = ({ item }) => {
-    item.amount = 1;
     return (
       <>
         <Button
@@ -132,7 +134,7 @@ function ProductModalContent({ displayType }) {
                   <p>{item.name}</p>
                   <h3>${item.price}</h3>
                 </Link>
-                {cartItems.includes(item) ? (
+                {cartItems.some((ele) => ele.id === item.id) ? (
                   <div>
                     {" "}
                     <Button
@@ -147,7 +149,13 @@ function ProductModalContent({ displayType }) {
                     >
                       <MinusOutlined />
                     </Button>
-                    <Button type="primary">{item.amount}</Button>
+                    <Button type="primary">
+                      {
+                        cartItems[
+                          cartItems.findIndex((ele) => ele.id === item.id)
+                        ].cartQuantity
+                      }
+                    </Button>
                     <Button
                       type="primary"
                       onClick={() => {

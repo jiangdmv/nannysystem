@@ -1,34 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    cartItems: [
-      {
-        category: 1,
-        description: "Sony Xperia 10 descriptions. This is a new description.",
-        id: 11,
-        image: "https://fdn2.gsmarena.com/vv/pics/sony/sony-xperia-10-1.jpg",
-        name: "Sony Xperia 10",
-        price: "599.00",
-        quantity: 5,
-        status: "published",
-        amount: 3,
-      },
-      {
-        category: 1,
-        description: "Samsung Galaxy M53 descriptions.",
-        id: 6,
-        image:
-          "https://fdn2.gsmarena.com/vv/pics/samsung/samsung-galaxy-m53-5g-1.jpg",
-        name: "Samsung Galaxy M53",
-        price: "1299.00",
-        quantity: 5,
-        status: "published",
-        amount: 4,
-      },
-    ],
-    amount: 1,
+    cartItems: [],
+    amount: 0,
     total: "599.00",
     isLoading: true,
   },
@@ -37,7 +15,17 @@ const cartSlice = createSlice({
       state.cartItems = [];
     },
     addToCart: (state, { payload }) => {
-      state.cartItems.push(payload);
+      const itemIndex = state.cartItems.findIndex(
+        (item) => item.id === payload.id
+      );
+      if (itemIndex >= 0) {
+        state.cartItems[itemIndex].cartQuantity += 1;
+      } else {
+        const tempProduct = { ...payload, cartQuantity: 1 };
+        console.log("tmpProduct");
+        console.log(tempProduct);
+        state.cartItems.push(tempProduct);
+      }
     },
     removeItem: (state, action) => {
       const itemId = action.payload;
@@ -45,18 +33,22 @@ const cartSlice = createSlice({
     },
     increase: (state, { payload }) => {
       const cartItem = state.cartItems.find((item) => item.id === payload.id);
-      cartItem.amount = cartItem.amount + 1;
+      cartItem.cartQuantity = cartItem.cartQuantity + 1;
     },
     decrease: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
-      cartItem.amount = cartItem.amount - 1;
+      if (state.cartItems.cartQuantity > 0) {
+        const cartItem = state.cartItems.find((item) => item.id === payload.id);
+        cartItem.cartQuantity = cartItem.cartQuantity - 1;
+      } else {
+        return;
+      }
     },
     calculateTotals: (state) => {
       let amount = 0;
       let total = 0;
       state.cartItems.forEach((item) => {
-        amount += item.amount;
-        total += item.amount * item.price;
+        amount += item.cartQuantity;
+        total += item.cartQuantity * item.price;
       });
       state.amount = amount;
       state.total = total;
