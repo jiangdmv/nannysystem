@@ -27,7 +27,7 @@ const Cart = (cartVisible, setCartVisible) => {
   return (
     <>
       <Button type="primary" onClick={() => cartVisible.setCartVisible(true)}>
-        CartNew
+        Cart
       </Button>
       <Modal
         titleText="Cart"
@@ -35,6 +35,7 @@ const Cart = (cartVisible, setCartVisible) => {
           top: 2,
           float: "right",
         }}
+        okText="Continue to checkout"
         visible={cartVisible.cartVisible}
         setCartVisible={cartVisible.setCartVisible}
         onCancel={() => cartVisible.setCartVisible(false)}

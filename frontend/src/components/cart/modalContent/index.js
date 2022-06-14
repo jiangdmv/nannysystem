@@ -102,7 +102,14 @@ const CartModalContent = () => {
                 <br></br>
                 <br></br>
                 <br></br>
-                <Button type="primary">Remove</Button>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    dispatch(removeItem(item.id));
+                  }}
+                >
+                  Remove
+                </Button>
               </Card.Grid>
             </Card>
           </List.Item>

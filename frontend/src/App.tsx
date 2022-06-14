@@ -12,6 +12,8 @@ import Edit from "./components/admin/edit";
 import Delete from "./components/admin/delete";
 import "./index.css";
 import ProductDetail from "./components/productDetail";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -32,6 +34,7 @@ function App() {
         </div>
         <Footer />
       </Router>
+      <ToastContainer />
     </>
   );
 }
