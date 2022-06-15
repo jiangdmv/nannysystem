@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Button } from "antd";
+import { Checkbox, Button, Input } from "antd";
 import validator from "validator";
 import { StatusCodes } from "http-status-codes";
-
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import api from "../../../api/loginApi";
 import TextInput from "../../../common/input/textInput";
 
@@ -126,6 +126,16 @@ const Form = ({
         errorMessage={password.errorMessage}
         onChange={(e) => setPassword({ ...password, value: e.target.value })}
       />
+
+      {/* <Input.Password
+        placeholder="input password"
+        value={password.value}
+        iconRender={(visible) =>
+          visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+        }
+        onChange={(e) => setPassword({ ...password, value: e.target.value })}
+      /> */}
+
       <Checkbox
         className="customer-form-checkbox"
         onChange={(e) => setCheck(e.target.checked)}

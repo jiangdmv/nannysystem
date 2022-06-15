@@ -58,22 +58,22 @@ const Form = ({ handleOnLogin = () => {} }: IProps) => {
   };
 
   // Return emtpy stirng if there is no error
-  const validatePasswordFEAndSetErrorMessage = () => {
-    let errorMessage = "";
-    if (!validator.isStrongPassword(password.value)) {
-      errorMessage = RESET_PASSWORD_FORM.PASSWORD.ERROR_MESSAGE;
-    }
-    setEmail({
-      ...password,
-      errorMessage,
-    });
-    return errorMessage;
-  };
+  // const validatePasswordFEAndSetErrorMessage = () => {
+  //   let errorMessage = "";
+  //   if (!validator.isStrongPassword(password.value)) {
+  //     errorMessage = RESET_PASSWORD_FORM.PASSWORD.ERROR_MESSAGE;
+  //   }
+  //   setEmail({
+  //     ...password,
+  //     errorMessage,
+  //   });
+  //   return errorMessage;
+  // };
 
   const handleSubmit = async () => {
     const emailError = validateEmailFEAndSetErrorMessage();
-    const codeError = validatePasswordFEAndSetErrorMessage();
-    if (!(emailError || codeError)) {
+    // const codeError = validatePasswordFEAndSetErrorMessage();
+    if (!emailError) {
       const response = await api.loginApi({
         customerType: CONSTANTS.USER_TYPE.CUSTOMER,
         email: email.value,

@@ -10,7 +10,7 @@ import CONSTANTS from "../../constants";
 import api from "../../api/loginApi";
 import axiosInstance from "../../api/axios";
 import history from "history/browser";
-
+import { toast } from "react-toastify";
 interface IProps {
   handleOnRegister: () => void;
 }
@@ -65,12 +65,24 @@ const Form = ({ handleOnRegister }: IProps) => {
   };
 
   // Return emtpy stirng if there is no error
-  const validatePasswordFEAndSetErrorMessage = () => {
+  // const validatePasswordFEAndSetErrorMessage = () => {
+  //   let errorMessage = "";
+  //   if (!validator.isStrongPassword(password.value)) {
+  //     errorMessage = REGISTER_FORM.PASSWORD.ERROR_MESSAGE;
+  //   }
+  //   setEmail({
+  //     ...password,
+  //     errorMessage,
+  //   });
+  //   return errorMessage;
+  // };
+
+  const validatePasswordMatch = () => {
     let errorMessage = "";
-    if (!validator.isStrongPassword(password.value)) {
-      errorMessage = REGISTER_FORM.PASSWORD.ERROR_MESSAGE;
+    if (password !== password2) {
+      errorMessage = REGISTER_FORM.PASSWORD.MATCH_ERROR;
     }
-    setEmail({
+    setPassword({
       ...password,
       errorMessage,
     });
@@ -78,9 +90,13 @@ const Form = ({ handleOnRegister }: IProps) => {
   };
 
   const handleSubmit = async () => {
+    validateEmailFEAndSetErrorMessage();
+    // validatePasswordFEAndSetErrorMessage();
     const emailError = validateEmailFEAndSetErrorMessage();
-    const passwordError = validatePasswordFEAndSetErrorMessage();
-    if (!(emailError || passwordError)) {
+    validatePasswordMatch();
+    // const passwordError = validatePasswordFEAndSetErrorMessage();
+    // if (!emailError && !passwordError) {
+    if (!emailError) {
       const response = await axiosInstance.post("user/register/", {
         email: email.value,
         user_name: userName.value,
@@ -96,6 +112,10 @@ const Form = ({ handleOnRegister }: IProps) => {
         handleOnRegister();
       }
       if (response.status !== StatusCodes.OK) {
+        toast.error("Error Notification !", {
+          position: toast.POSITION.TOP_LEFT,
+        });
+        console.log(response.status);
         throw new Error(
           `Login API response status error: ${JSON.stringify(response)}`
         );

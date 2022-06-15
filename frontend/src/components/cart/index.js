@@ -21,9 +21,6 @@ const Cart = (cartVisible, setCartVisible) => {
   //     return <></>;
   //   };
 
-  console.log(cartVisible.cartVisible);
-  console.log(cartVisible.setCartVisible);
-
   return (
     <>
       <Button type="primary" onClick={() => cartVisible.setCartVisible(true)}>

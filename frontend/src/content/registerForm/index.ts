@@ -23,8 +23,9 @@ const REGISTER_FORM = {
   PASSWORD: {
     LABEL: "Password",
     PLACE_HOLDER: "Password",
-    INFO_MESSAGE: "Please make sure you type the correct email",
-    ERROR_MESSAGE: "Your password is incorrect",
+    INFO_MESSAGE: "Please make sure you type the correct password",
+    ERROR_MESSAGE: "Your password is not a strong password.",
+    MATCH_ERROR: "Passwords do not match.",
   },
   PASSWORD2: {
     LABEL: "Re-enter Password",
