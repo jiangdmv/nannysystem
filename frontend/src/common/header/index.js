@@ -35,6 +35,8 @@ const Header = () => {
       .then((res) => {
         localStorage.setItem("access_token", res.data.access);
         localStorage.setItem("refresh_token", res.data.refresh);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem("user_name", res.data.username);
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
         console.log(res.data);
