@@ -7,9 +7,11 @@ import SearchBar from "../searchBar";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import axiosInstance from "../../api/axios";
 import { StatusCodes } from "http-status-codes";
+import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
 import LOGIN_FORM from "../../content/form";
 import { toast } from "react-toastify";
+import { loginCart } from "../../app/cartSlice";
 
 const Header = () => {
   const [isLoggdIn, setIsLoggedin] = useState(false);
@@ -17,6 +19,9 @@ const Header = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const [cartVisible, setCartVisible] = useState(false);
+
+  const { cartItems, amount, total } = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState({
     value: "",
@@ -53,6 +58,7 @@ const Header = () => {
         localStorage.setItem("refresh_token", res.data.refresh);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("user_name", res.data.username);
+
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
         console.log(res.data);
@@ -60,6 +66,9 @@ const Header = () => {
         handleOnLoginOK();
         setIsLoggedin(true);
         setIsLoading(false);
+        const user_cart = localStorage.getItem("cart");
+        console.log(user_cart);
+        dispatch(loginCart(user_cart));
         // history.push("home/");
         //console.log(res);
         //console.log(res.data);

@@ -31,6 +31,15 @@ const cartSlice = createSlice({
         state.cartItems.push(tempProduct);
       }
     },
+    loginCart: (state, { payload }) => {
+      const payload1 = JSON.parse(payload);
+      const amount = payload1.amount;
+      const total = payload1.total;
+      state.amount = amount;
+      state.total = total;
+      const cartItems = JSON.parse(payload1.cartItems);
+      state.cartItems.push.apply(state.cartItems, cartItems);
+    },
     removeItem: (state, action) => {
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
@@ -73,6 +82,7 @@ export const {
   clearCart,
   addToCart,
   removeItem,
+  loginCart,
   increase,
   decrease,
   calculateTotals,
