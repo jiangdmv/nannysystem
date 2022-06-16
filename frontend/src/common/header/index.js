@@ -7,6 +7,9 @@ import SearchBar from "../searchBar";
 import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import axiosInstance from "../../api/axios";
 import { StatusCodes } from "http-status-codes";
+import validator from "validator";
+import LOGIN_FORM from "../../content/form";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const [isLoggdIn, setIsLoggedin] = useState(false);
@@ -26,7 +29,20 @@ const Header = () => {
 
   const handleOnLoginOK = () => setVisible(false);
 
+  const validateEmailFEAndSetErrorMessage = () => {
+    let errorMessage = "";
+    if (!validator.isEmail(email.value)) {
+      errorMessage = LOGIN_FORM.EMAIL.ERROR_MESSAGE;
+    }
+    setEmail({
+      ...email,
+      errorMessage,
+    });
+    return errorMessage;
+  };
+
   const handleSubmit = async () => {
+    validateEmailFEAndSetErrorMessage();
     const response = await axiosInstance
       .post("token/", {
         email: email.value,
@@ -42,24 +58,27 @@ const Header = () => {
         console.log(res.data);
         // handleOnLogin();
         handleOnLoginOK();
-        // setIsLoggedin(true);
+        setIsLoggedin(true);
         setIsLoading(false);
         // history.push("home/");
         //console.log(res);
         //console.log(res.data);
       });
 
-    //   if (response.status == StatusCodes.CREATED) {
-    //     // Page: please check your email
-    //     handleOnLoginOK();
-    //   }
-    //   if (response.status !== StatusCodes.OK) {
-    //     throw new Error(
-    //       `Login API response status error: ${JSON.stringify(response)}`
-    //     );
-    //   } else {
-    //     // handleOnLogin();
-    //   }
+    // if (response.status == StatusCodes.OK) {
+    //   // Page: please check your email
+    //   handleOnLoginOK();
+    // }
+    // if (response.status !== StatusCodes.OK) {
+    //   toast.error("Error Notification !", {
+    //     position: toast.POSITION.TOP_LEFT,
+    //   });
+    //   throw new Error(
+    //     `Login API response status error: ${JSON.stringify(response)}`
+    //   );
+    // } else {
+    //   // handleOnLogin();
+    // }
   };
 
   return (

@@ -5,3 +5,11 @@
 .quantity {
   display: inline;
 }
+
+.priceLayout {
+  display: flex;
+}
+
+.price {
+  float: right;
+}

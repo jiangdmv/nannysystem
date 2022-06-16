@@ -17,9 +17,12 @@ const CartModalContent = () => {
   const dispatch = useDispatch();
   const { cartItems, amount, total } = useSelector((store) => store.cart);
 
+  const [newCoupon, setNewCoupon] = useState("20 DOLLAR OFF");
+  const [appliedCoupon, setAppliedCoupon] = useState(false);
+
   useEffect(() => {
     dispatch(calculateTotals());
-  }, [cartItems]);
+  }, [cartItems, appliedCoupon]);
 
   if (amount < 1) {
     return (
@@ -33,8 +36,15 @@ const CartModalContent = () => {
     return (total * 0.07).toFixed(2);
   };
 
+  const Coupon = { "20 DOLLAR OFF": 20 };
+
   const EstimatedTotal = () => {
     return (total * 1.07).toFixed(2);
+  };
+
+  const ApplyCoupon = () => {
+    setAppliedCoupon(true);
+    return EstimatedTotal() - Coupon[newCoupon];
   };
 
   const gridStyle25 = {
@@ -123,19 +133,36 @@ const CartModalContent = () => {
             width: "calc(80%)",
           }}
           defaultValue="20 DOLLAR OFF"
+          onChange={(e) => setNewCoupon(e.target.value)}
         />
-        <Button type="primary">Apply</Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            ApplyCoupon();
+          }}
+        >
+          Apply
+        </Button>
       </Input.Group>
       <br></br>
       <br></br>
-
-      <div>Subtotal ${total}</div>
       <div>
-        Tax $<Tax />
-      </div>
-      <div>Discount</div>
-      <div>
-        Estimated total $<EstimatedTotal />
+        <h3>
+          Subtotal <div className="price">${total}</div>
+        </h3>
+        <h3>
+          Tax{" "}
+          <div className="price">
+            $<Tax />
+          </div>
+        </h3>
+        <h3>Discount</h3>
+        <h3>
+          Estimated total{" "}
+          <div className="price">
+            ${appliedCoupon ? <ApplyCoupon /> : <EstimatedTotal />}
+          </div>
+        </h3>
       </div>
     </>
   );

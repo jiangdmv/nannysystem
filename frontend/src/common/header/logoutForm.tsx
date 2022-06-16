@@ -11,7 +11,7 @@ import history from "history/browser";
 import "antd/dist/antd.css";
 
 const LogoutButton = ({ handleLogout }) => {
-  useEffect(() => {
+  const handleOnClick = async () => {
     const response = axiosInstance.post("user/logout/blacklist/", {
       refresh_token: localStorage.getItem("refresh_token"),
     });
@@ -19,8 +19,8 @@ const LogoutButton = ({ handleLogout }) => {
     localStorage.removeItem("refresh_token");
     axiosInstance.defaults.headers["Authorization"] = null;
     console.log("logout");
-    // handleLogout();
-  });
+    handleLogout();
+  };
 
   // const handleOnClick = async () => {
   //   try {
@@ -54,7 +54,7 @@ const LogoutButton = ({ handleLogout }) => {
         // icon={<BsPersonCheckFill />}
       />
 
-      <Button type="primary" onClick={handleLogout}>
+      <Button type="primary" onClick={handleOnClick}>
         {LOGIN_FORM.LOGOUT}
       </Button>
     </>
