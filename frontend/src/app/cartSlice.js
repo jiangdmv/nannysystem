@@ -32,12 +32,11 @@ const cartSlice = createSlice({
       }
     },
     loginCart: (state, { payload }) => {
-      const payload1 = JSON.parse(payload);
-      const amount = payload1.amount;
-      const total = payload1.total;
+      const amount = payload.amount;
+      const total = payload.total;
       state.amount = amount;
       state.total = total;
-      const cartItems = JSON.parse(payload1.cartItems);
+      const cartItems = JSON.parse(payload.cartItems);
       state.cartItems.push.apply(state.cartItems, cartItems);
     },
     removeItem: (state, action) => {

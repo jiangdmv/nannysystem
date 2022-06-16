@@ -28,7 +28,7 @@ const LogoutButton = ({ handleLogout }) => {
       amount: amount,
       total: total,
     };
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(user_name + "Cart", JSON.stringify(cart));
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     localStorage.setItem("amount", amount);
     localStorage.setItem("total", total);

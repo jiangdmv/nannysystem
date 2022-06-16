@@ -66,9 +66,16 @@ const Header = () => {
         handleOnLoginOK();
         setIsLoggedin(true);
         setIsLoading(false);
-        const user_cart = localStorage.getItem("cart");
+        const user_cart = localStorage.getItem(res.data.username + "Cart");
         console.log(user_cart);
-        dispatch(loginCart(user_cart));
+        if (user_cart) {
+          const last_cart = JSON.parse(user_cart);
+          const last_user = last_cart.user;
+          if (res.data.username == last_user) {
+            dispatch(loginCart(last_cart));
+          }
+        }
+
         // history.push("home/");
         //console.log(res);
         //console.log(res.data);
