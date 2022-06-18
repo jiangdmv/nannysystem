@@ -15,14 +15,39 @@ import "./index.css";
 
 const CartModalContent = () => {
   const dispatch = useDispatch();
-  const { cartItems, amount, total } = useSelector((store) => store.cart);
+  const { cartItems, amount, total, isLoading } = useSelector(
+    (store) => store.cart
+  );
 
   const [newCoupon, setNewCoupon] = useState("20 DOLLAR OFF");
   const [appliedCoupon, setAppliedCoupon] = useState(false);
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
     dispatch(calculateTotals());
   }, [cartItems, appliedCoupon]);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+    const user_name = localStorage.getItem("user_name");
+    let cart = {
+      user: user_name,
+      cartItems: JSON.stringify(cartItems),
+      amount: amount,
+      total: total,
+    };
+    localStorage.setItem(user_name + "Cart", JSON.stringify(cart));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("amount", amount);
+    localStorage.setItem("total", total);
+    console.log("main");
+    console.log(cartItems);
+    console.log(isLoading);
+  }, [amount]);
 
   if (amount < 1) {
     return (

@@ -22,6 +22,7 @@ import {
   increase,
   decrease,
   calculateTotals,
+  isLoadingComplete,
 } from "../../app/cartSlice";
 
 function ProductDetail() {
@@ -29,13 +30,39 @@ function ProductDetail() {
   const { id } = useParams();
 
   const [item, setItem] = useState<any[]>([]);
-  const [isloading, setIsLoading] = useState(true);
+  //const [isloading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-  const { cartItems, amount, total } = useSelector((store) => store.cart);
+
+  const { cartItems, amount, total, isLoading } = useSelector(
+    (store) => store.cart
+  );
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
     dispatch(calculateTotals());
   }, [cartItems]);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+    const user_name = localStorage.getItem("user_name");
+    let cart = {
+      user: user_name,
+      cartItems: JSON.stringify(cartItems),
+      amount: amount,
+      total: total,
+    };
+    localStorage.setItem(user_name + "Cart", JSON.stringify(cart));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("amount", amount);
+    localStorage.setItem("total", total);
+    console.log("product detail");
+    console.log(cartItems);
+    console.log(isLoading);
+  }, [amount]);
 
   const apiUrl = "http://localhost:8000/api/product/";
 
@@ -50,7 +77,8 @@ function ProductDetail() {
       } catch (err) {
         console.log(err);
       } finally {
-        setIsLoading(false);
+        dispatch(isLoadingComplete());
+        //setIsLoading(false);
       }
     };
     fetchItems();
@@ -183,8 +211,8 @@ function ProductDetail() {
 
   return (
     <>
-      {isloading && <p>Loading results...</p>}
-      {!isloading && <ShowProductDetail item={item} />}
+      {isLoading && <p>Loading results...</p>}
+      {!isLoading && <ShowProductDetail item={item} />}
     </>
   );
 }

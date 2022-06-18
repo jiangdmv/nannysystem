@@ -18,8 +18,7 @@ const LogoutButton = ({ handleLogout }) => {
     const response = axiosInstance.post("user/logout/blacklist/", {
       refresh_token: localStorage.getItem("refresh_token"),
     });
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+
     axiosInstance.defaults.headers["Authorization"] = null;
     const user_name = localStorage.getItem("user_name");
     let cart = {
@@ -33,6 +32,14 @@ const LogoutButton = ({ handleLogout }) => {
     localStorage.setItem("amount", amount);
     localStorage.setItem("total", total);
     console.log("logout");
+
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
+    localStorage.removeItem("role");
+    localStorage.removeItem("user_name");
+
     handleLogout();
   };
 

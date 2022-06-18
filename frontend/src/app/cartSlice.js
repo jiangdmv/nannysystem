@@ -2,12 +2,31 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const last_user_name = localStorage.getItem("user_name");
+const last_user_cart = JSON.parse(
+  localStorage.getItem(last_user_name + "Cart")
+);
+const cartItems2 = localStorage.getItem("cartItems");
+
+//JSON.parse(localStorage.getItem("cartItems")) ||
+
+// let cart = {
+//   user: user_name,
+//   cartItems: JSON.stringify(cartItems),
+//   amount: amount,
+//   total: total,
+// };
+// localStorage.setItem(user_name + "Cart", JSON.stringify(cart));
+// localStorage.setItem("cartItems", JSON.stringify(cartItems));
+// localStorage.setItem("amount", amount);
+// localStorage.setItem("total", total);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    cartItems: [],
-    amount: 0,
-    total: "599.00",
+    cartItems: JSON.parse(localStorage.getItem(last_user_cart.cartItems)) || [],
+    amount: localStorage.getItem(last_user_cart.amount) || 0,
+    total: localStorage.getItem(last_user_cart.total) || "0",
     isLoading: true,
   },
   reducers: {
@@ -73,6 +92,11 @@ const cartSlice = createSlice({
       });
       state.amount = amount;
       state.total = total;
+      console.log(amount);
+      console.log(total);
+    },
+    isLoadingComplete: (state) => {
+      state.isLoading = false;
     },
   },
 });
@@ -85,5 +109,6 @@ export const {
   increase,
   decrease,
   calculateTotals,
+  isLoadingComplete,
 } = cartSlice.actions;
 export default cartSlice.reducer;

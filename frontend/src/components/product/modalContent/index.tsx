@@ -16,19 +16,45 @@ import {
   increase,
   decrease,
   calculateTotals,
+  isLoadingComplete,
 } from "../../../app/cartSlice";
 
 function ProductModalContent({ displayType }) {
   const [results, setResults] = useState<any[]>([]);
   const [originResults, setOriginResults] = useState<any[]>([]);
-  const [isloading, setIsLoading] = useState(true);
+  //const [isloading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
 
-  const { cartItems, amount, total } = useSelector((store) => store.cart);
+  const { cartItems, amount, total, isLoading } = useSelector(
+    (store) => store.cart
+  );
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
     dispatch(calculateTotals());
   }, [cartItems]);
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+    const user_name = localStorage.getItem("user_name");
+    let cart = {
+      user: user_name,
+      cartItems: JSON.stringify(cartItems),
+      amount: amount,
+      total: total,
+    };
+    localStorage.setItem(user_name + "Cart", JSON.stringify(cart));
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    localStorage.setItem("amount", amount);
+    localStorage.setItem("total", total);
+    console.log("modal");
+    console.log(cartItems);
+    console.log(isLoading);
+  }, [amount]);
 
   const apiUrl = "http://localhost:8000/api/product/";
 
@@ -44,10 +70,19 @@ function ProductModalContent({ displayType }) {
       } catch (err) {
         console.log(err);
       } finally {
-        setIsLoading(false);
+        dispatch(isLoadingComplete());
+        //setIsLoading(false);
       }
     };
     fetchItems();
+
+    // const user_name = localStorage.getItem("user_name");
+    // console.log("thishaha" + user_name);
+    // const user_cart = localStorage.getItem(user_name + "Cart");
+    // console.log(user_cart);
+    // const last_cart = JSON.parse(user_cart);
+
+    // dispatch(addToCart(last_cart.cartItems));
   }, []);
 
   //   const Test = ({ results }) => {
@@ -69,7 +104,7 @@ function ProductModalContent({ displayType }) {
   //   };
 
   useEffect(() => {
-    if (isloading) {
+    if (isLoading) {
       return;
     }
     if (displayType === "Low to High") {
@@ -178,8 +213,8 @@ function ProductModalContent({ displayType }) {
 
   return (
     <>
-      {isloading && <p>Loading results...</p>}
-      {!isloading && <ShowProducts results={results} />}
+      {isLoading && <p>Loading results...</p>}
+      {!isLoading && <ShowProducts results={results} />}
     </>
   );
 }

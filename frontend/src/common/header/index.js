@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import Login from "./loginForm";
 import Logout from "./logoutForm";
@@ -12,6 +12,7 @@ import validator from "validator";
 import LOGIN_FORM from "../../content/form";
 import { toast } from "react-toastify";
 import { loginCart } from "../../app/cartSlice";
+import { Spin } from "antd";
 
 const Header = () => {
   const [isLoggdIn, setIsLoggedin] = useState(false);
@@ -58,6 +59,8 @@ const Header = () => {
         localStorage.setItem("refresh_token", res.data.refresh);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("user_name", res.data.username);
+        localStorage.setItem("email", email.value);
+        localStorage.setItem("password", password.value);
 
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
@@ -65,7 +68,7 @@ const Header = () => {
         // handleOnLogin();
         handleOnLoginOK();
         setIsLoggedin(true);
-        setIsLoading(false);
+        // setIsLoading(false);
         const user_cart = localStorage.getItem(res.data.username + "Cart");
         console.log(user_cart);
         if (user_cart) {
@@ -96,6 +99,47 @@ const Header = () => {
     //   // handleOnLogin();
     // }
   };
+
+  useEffect(() => {
+    async function getUser() {
+      const old_email = localStorage.getItem("email");
+      const old_password = localStorage.getItem("password");
+
+      const response = await axiosInstance
+        .post("token/", {
+          email: old_email,
+          password: old_password,
+        })
+        .then((res) => {
+          if (
+            res.data.username === localStorage.getItem("user_name") &&
+            res.data.role === localStorage.getItem("role")
+          ) {
+            setIsLoggedin(true);
+            setIsLoading(false);
+          }
+
+          localStorage.setItem("access_token", res.data.access);
+          localStorage.setItem("refresh_token", res.data.refresh);
+          localStorage.setItem("role", res.data.role);
+          localStorage.setItem("user_name", res.data.username);
+
+          axiosInstance.defaults.headers["Authorization"] =
+            "JWT " + localStorage.getItem("access_token");
+
+          const user_cart = localStorage.getItem(res.data.username + "Cart");
+          console.log(user_cart);
+          if (user_cart) {
+            const last_cart = JSON.parse(user_cart);
+            const last_user = last_cart.user;
+            if (res.data.username == last_user) {
+              dispatch(loginCart(last_cart));
+            }
+          }
+        });
+    }
+    getUser();
+  }, []);
 
   return (
     <>
